@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Test files
+*.txt
+*.csv
+lab_3/json.json
+lab_3/propertis.da
+.vscode/
