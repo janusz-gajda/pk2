@@ -52,8 +52,9 @@ Mkfile.old
 dkms.conf
 
 # Test files
+.vscode/
 *.txt
 *.csv
+*.html
 lab_3/json.json
 lab_3/propertis.da
-.vscode/

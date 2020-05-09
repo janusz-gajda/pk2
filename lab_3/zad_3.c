@@ -74,17 +74,17 @@ int main(int arg, char *argv[]){
         }
         FILE *out_csv = fopen(argv[2],"w");
         FILE *out_txt = fopen(argv[3],"w");
-        fprintf(out_csv,"type,temperatur,weight,height,pressure1,pressure2\n");
+        fprintf(out_csv,"type,temp,weight,height,pressure1,pressure2\n");
         fprintf(out_csv,"avrage,%f,%f,%f,%f,%f\n",sum_temp/size,sum_weight/size,sum_height/size,sum_press1/size,sum_press2/size);
         fprintf(out_csv,"median,%f,%f,%f,%f,%f\n",mid_temp,mid_weight,mid_height,mid_press1,mid_press2);
         fprintf(out_csv,"min,%f,%f,%f,%f,%f\n",array_temp[0],array_weight[0],array_height[0],array_press1[0],array_press2[0]);
-        fprintf(out_csv,"max,%f,%f,%f,%f,%f\n",array_temp[size-1],array_weight[size-1],array_height[size-1],array_press1[size-1],array_press2[size-1]);
+        fprintf(out_csv,"max,%f,%f,%f,%f,%f",array_temp[size-1],array_weight[size-1],array_height[size-1],array_press1[size-1],array_press2[size-1]);
         fclose(out_csv);
         fprintf(out_txt,"temp:\n\tavr: %f\n\tmed: %f\n\tmin: %f\n\tmax: %f\n\n",sum_temp/size,mid_temp,array_temp[0],array_temp[size-1]);
         fprintf(out_txt,"weight:\n\tavr: %f\n\tmed: %f\n\tmin: %f\n\tmax: %f\n\n",sum_weight/size,mid_weight,array_weight[0],array_weight[size-1]);
         fprintf(out_txt,"height:\n\tavr: %f\n\tmed: %f\n\tmin: %f\n\tmax: %f\n\n",sum_height/size,mid_height,array_height[0],array_height[size-1]);
         fprintf(out_txt,"pressure1:\n\tavr: %f\n\tmed: %f\n\tmin: %f\n\tmax: %f\n\n",sum_press1/size,mid_press1,array_press1[0],array_press1[size-1]);
-        fprintf(out_txt,"pressure2:\n\tavr: %f\n\tmed: %f\n\tmin: %f\n\tmax: %f\n\n",sum_press2/size,mid_press2,array_press2[0],array_press2[size-1]);
+        fprintf(out_txt,"pressure2:\n\tavr: %f\n\tmed: %f\n\tmin: %f\n\tmax: %f",sum_press2/size,mid_press2,array_press2[0],array_press2[size-1]);
         fclose(out_txt);
     }
 }
