@@ -1,0 +1,518 @@
+23:17:02 INFO  zad_1.c:515: # - digit
+23:17:02 INFO  zad_1.c:516: U - upper case
+23:17:02 INFO  zad_1.c:517: l - lower case
+23:17:02 INFO  zad_1.c:518: * - any symbol(s)
+23:17:02 INFO  zad_1.c:519: ... - and so on
+23:17:02 DEBUG zad_1.c:495: Szumia jodly na gor szczycie, is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Szumia jodly na gor szczycie, has only numbers
+23:17:02 WARN  zad_1.c:28: Szumia jodly na gor szczycie, has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Szumia jodly na gor szczycie, has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Szumia jodly na gor szczycie, has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Szumia jodly na gor szczycie, has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Szumia jodly na gor szczycie, has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Szumia jodly na gor szczycie, has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Szumia jodly na gor szczycie, has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Szumia jodly na gor szczycie, has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: S is upper case
+23:17:02 DEBUG zad_1.c:233: z is lower case
+23:17:02 DEBUG zad_1.c:233: u is lower case
+23:17:02 DEBUG zad_1.c:233: m is lower case
+23:17:02 DEBUG zad_1.c:233: i is lower case
+23:17:02 DEBUG zad_1.c:233: a is lower case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Szumia jodly na gor szczycie, has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: S is upper case
+23:17:02 DEBUG zad_1.c:290: z is lower case
+23:17:02 DEBUG zad_1.c:290: u is lower case
+23:17:02 DEBUG zad_1.c:290: m is lower case
+23:17:02 DEBUG zad_1.c:290: i is lower case
+23:17:02 DEBUG zad_1.c:290: a is lower case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: j isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if Szumia jodly na gor szczycie, has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: S err = 0
+23:17:02 DEBUG zad_1.c:396: z err = 2
+23:17:02 DEBUG zad_1.c:396: u err = 2
+23:17:02 DEBUG zad_1.c:396: m err = 2
+23:17:02 DEBUG zad_1.c:396: i err = 2
+23:17:02 DEBUG zad_1.c:396: a err = 2
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: j err = 3
+23:17:02 WARN  zad_1.c:479: j fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if Szumia jodly na gor szczycie, has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: Szumia jodly na gor szczycie, is safe to be passed
+23:17:02 DEBUG zad_1.c:495: Szumia sobie w dal! is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Szumia sobie w dal! has only numbers
+23:17:02 WARN  zad_1.c:28: Szumia sobie w dal! has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Szumia sobie w dal! has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Szumia sobie w dal! has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Szumia sobie w dal! has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Szumia sobie w dal! has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Szumia sobie w dal! has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Szumia sobie w dal! has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Szumia sobie w dal! has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: S is upper case
+23:17:02 DEBUG zad_1.c:233: z is lower case
+23:17:02 DEBUG zad_1.c:233: u is lower case
+23:17:02 DEBUG zad_1.c:233: m is lower case
+23:17:02 DEBUG zad_1.c:233: i is lower case
+23:17:02 DEBUG zad_1.c:233: a is lower case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Szumia sobie w dal! has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: S is upper case
+23:17:02 DEBUG zad_1.c:290: z is lower case
+23:17:02 DEBUG zad_1.c:290: u is lower case
+23:17:02 DEBUG zad_1.c:290: m is lower case
+23:17:02 DEBUG zad_1.c:290: i is lower case
+23:17:02 DEBUG zad_1.c:290: a is lower case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: s isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if Szumia sobie w dal! has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: S err = 0
+23:17:02 DEBUG zad_1.c:396: z err = 2
+23:17:02 DEBUG zad_1.c:396: u err = 2
+23:17:02 DEBUG zad_1.c:396: m err = 2
+23:17:02 DEBUG zad_1.c:396: i err = 2
+23:17:02 DEBUG zad_1.c:396: a err = 2
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: s err = 3
+23:17:02 WARN  zad_1.c:479: s fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if Szumia sobie w dal! has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: Szumia sobie w dal! is safe to be passed
+23:17:02 DEBUG zad_1.c:495: I mlodemu smutne zycie, is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if I mlodemu smutne zycie, has only numbers
+23:17:02 WARN  zad_1.c:28: I mlodemu smutne zycie, has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if I mlodemu smutne zycie, has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: I mlodemu smutne zycie, has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if I mlodemu smutne zycie, has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: I mlodemu smutne zycie, has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if I mlodemu smutne zycie, has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: I mlodemu smutne zycie, has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if I mlodemu smutne zycie, has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: I is upper case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if I mlodemu smutne zycie, has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: I is upper case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: m isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if I mlodemu smutne zycie, has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: I err = 0
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: m err = 3
+23:17:02 WARN  zad_1.c:479: m fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if I mlodemu smutne zycie, has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: I mlodemu smutne zycie, is safe to be passed
+23:17:02 DEBUG zad_1.c:495: Gdy ma w sercu zal... is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Gdy ma w sercu zal... has only numbers
+23:17:02 WARN  zad_1.c:28: Gdy ma w sercu zal... has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Gdy ma w sercu zal... has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Gdy ma w sercu zal... has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Gdy ma w sercu zal... has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Gdy ma w sercu zal... has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Gdy ma w sercu zal... has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Gdy ma w sercu zal... has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Gdy ma w sercu zal... has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: G is upper case
+23:17:02 DEBUG zad_1.c:233: d is lower case
+23:17:02 DEBUG zad_1.c:233: y is lower case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Gdy ma w sercu zal... has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: G is upper case
+23:17:02 DEBUG zad_1.c:290: d is lower case
+23:17:02 DEBUG zad_1.c:290: y is lower case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: m isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if Gdy ma w sercu zal... has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: G err = 0
+23:17:02 DEBUG zad_1.c:396: d err = 2
+23:17:02 DEBUG zad_1.c:396: y err = 2
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: m err = 3
+23:17:02 WARN  zad_1.c:479: m fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if Gdy ma w sercu zal... has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: Gdy ma w sercu zal... is safe to be passed
+23:17:02 DEBUG zad_1.c:495: 123456789 is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if 123456789 has only numbers
+23:17:02 DEBUG zad_1.c:41: 1 is a digit
+23:17:02 DEBUG zad_1.c:41: 2 is a digit
+23:17:02 DEBUG zad_1.c:41: 3 is a digit
+23:17:02 DEBUG zad_1.c:41: 4 is a digit
+23:17:02 DEBUG zad_1.c:41: 5 is a digit
+23:17:02 DEBUG zad_1.c:41: 6 is a digit
+23:17:02 DEBUG zad_1.c:41: 7 is a digit
+23:17:02 DEBUG zad_1.c:41: 8 is a digit
+23:17:02 DEBUG zad_1.c:41: 9 is a digit
+23:17:02 INFO  zad_1.c:48: 123456789 is a phone number
+23:17:02 DEBUG zad_1.c:495: 1234567890 is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if 1234567890 has only numbers
+23:17:02 DEBUG zad_1.c:41: 1 is a digit
+23:17:02 DEBUG zad_1.c:41: 2 is a digit
+23:17:02 DEBUG zad_1.c:41: 3 is a digit
+23:17:02 DEBUG zad_1.c:41: 4 is a digit
+23:17:02 DEBUG zad_1.c:41: 5 is a digit
+23:17:02 DEBUG zad_1.c:41: 6 is a digit
+23:17:02 DEBUG zad_1.c:41: 7 is a digit
+23:17:02 DEBUG zad_1.c:41: 8 is a digit
+23:17:02 DEBUG zad_1.c:41: 9 is a digit
+23:17:02 DEBUG zad_1.c:41: 0 is a digit
+23:17:02 INFO  zad_1.c:52: 1234567890 is a NIP number
+23:17:02 DEBUG zad_1.c:495: 12345678900 is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if 12345678900 has only numbers
+23:17:02 DEBUG zad_1.c:41: 1 is a digit
+23:17:02 DEBUG zad_1.c:41: 2 is a digit
+23:17:02 DEBUG zad_1.c:41: 3 is a digit
+23:17:02 DEBUG zad_1.c:41: 4 is a digit
+23:17:02 DEBUG zad_1.c:41: 5 is a digit
+23:17:02 DEBUG zad_1.c:41: 6 is a digit
+23:17:02 DEBUG zad_1.c:41: 7 is a digit
+23:17:02 DEBUG zad_1.c:41: 8 is a digit
+23:17:02 DEBUG zad_1.c:41: 9 is a digit
+23:17:02 DEBUG zad_1.c:41: 0 is a digit
+23:17:02 DEBUG zad_1.c:41: 0 is a digit
+23:17:02 INFO  zad_1.c:56: 12345678900 is a PESEL number
+23:17:02 DEBUG zad_1.c:495: 123-234-556 is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if 123-234-556 has only numbers
+23:17:02 DEBUG zad_1.c:41: 1 is a digit
+23:17:02 DEBUG zad_1.c:41: 2 is a digit
+23:17:02 DEBUG zad_1.c:41: 3 is a digit
+23:17:02 WARN  zad_1.c:35: - isn't a digit
+23:17:02 INFO  zad_1.c:70: Cheking, if 123-234-556 has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: 123-234-556 has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if 123-234-556 has ###-###-### or ### ### ### (phone) pattern
+23:17:02 DEBUG zad_1.c:131: 1 is a digit
+23:17:02 DEBUG zad_1.c:131: 2 is a digit
+23:17:02 DEBUG zad_1.c:131: 3 is a digit
+23:17:02 DEBUG zad_1.c:134: - is dash/space
+23:17:02 DEBUG zad_1.c:137: 2 is a digit
+23:17:02 DEBUG zad_1.c:137: 3 is a digit
+23:17:02 DEBUG zad_1.c:137: 4 is a digit
+23:17:02 DEBUG zad_1.c:140: - is dash/space
+23:17:02 DEBUG zad_1.c:143: 5 is a digit
+23:17:02 DEBUG zad_1.c:143: 5 is a digit
+23:17:02 DEBUG zad_1.c:143: 6 is a digit
+23:17:02 INFO  zad_1.c:151: 123-234-556 is a phone number
+23:17:02 DEBUG zad_1.c:495: 23-324-54-66 is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if 23-324-54-66 has only numbers
+23:17:02 WARN  zad_1.c:28: 23-324-54-66 has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if 23-324-54-66 has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: 23-324-54-66 has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if 23-324-54-66 has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: 23-324-54-66 has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if 23-324-54-66 has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 DEBUG zad_1.c:174: 2 is a digit
+23:17:02 DEBUG zad_1.c:174: 3 is a digit
+23:17:02 DEBUG zad_1.c:177: - is dash/space
+23:17:02 DEBUG zad_1.c:180: 3 is a digit
+23:17:02 DEBUG zad_1.c:180: 2 is a digit
+23:17:02 DEBUG zad_1.c:180: 4 is a digit
+23:17:02 DEBUG zad_1.c:183: - is dash/space
+23:17:02 DEBUG zad_1.c:186: 5 is a digit
+23:17:02 DEBUG zad_1.c:186: 4 is a digit
+23:17:02 DEBUG zad_1.c:189: - is dash/space
+23:17:02 DEBUG zad_1.c:192: 6 is a digit
+23:17:02 DEBUG zad_1.c:192: 6 is a digit
+23:17:02 INFO  zad_1.c:200: 23-324-54-66 is a phone number
+23:17:02 DEBUG zad_1.c:495: 234-32-43-567 is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if 234-32-43-567 has only numbers
+23:17:02 WARN  zad_1.c:28: 234-32-43-567 has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if 234-32-43-567 has ###-##-##-### (NIP) pattern
+23:17:02 DEBUG zad_1.c:80: 2 is a digit
+23:17:02 DEBUG zad_1.c:80: 3 is a digit
+23:17:02 DEBUG zad_1.c:80: 4 is a digit
+23:17:02 DEBUG zad_1.c:83: - is dash
+23:17:02 DEBUG zad_1.c:86: 3 is a digit
+23:17:02 DEBUG zad_1.c:86: 2 is a digit
+23:17:02 DEBUG zad_1.c:89: - is dash
+23:17:02 DEBUG zad_1.c:92: 4 is a digit
+23:17:02 DEBUG zad_1.c:92: 3 is a digit
+23:17:02 DEBUG zad_1.c:95: - is dash
+23:17:02 DEBUG zad_1.c:98: 5 is a digit
+23:17:02 DEBUG zad_1.c:98: 6 is a digit
+23:17:02 DEBUG zad_1.c:98: 7 is a digit
+23:17:02 INFO  zad_1.c:105: 234-32-43-567 is a NIP number
+23:17:02 DEBUG zad_1.c:495: Janusz is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Janusz has only numbers
+23:17:02 WARN  zad_1.c:28: Janusz has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Janusz has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Janusz has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Janusz has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Janusz has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Janusz has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Janusz has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Janusz has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: J is upper case
+23:17:02 DEBUG zad_1.c:233: a is lower case
+23:17:02 DEBUG zad_1.c:233: n is lower case
+23:17:02 DEBUG zad_1.c:233: u is lower case
+23:17:02 DEBUG zad_1.c:233: s is lower case
+23:17:02 DEBUG zad_1.c:233: z is lower case
+23:17:02 INFO  zad_1.c:257: Janusz is name/surname
+23:17:02 DEBUG zad_1.c:495: Janusz Gajda is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Janusz Gajda has only numbers
+23:17:02 WARN  zad_1.c:28: Janusz Gajda has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Janusz Gajda has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Janusz Gajda has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Janusz Gajda has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Janusz Gajda has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Janusz Gajda has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:194: J fell out of pattern
+23:17:02 INFO  zad_1.c:213: Cheking, if Janusz Gajda has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: J is upper case
+23:17:02 DEBUG zad_1.c:233: a is lower case
+23:17:02 DEBUG zad_1.c:233: n is lower case
+23:17:02 DEBUG zad_1.c:233: u is lower case
+23:17:02 DEBUG zad_1.c:233: s is lower case
+23:17:02 DEBUG zad_1.c:233: z is lower case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Janusz Gajda has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: J is upper case
+23:17:02 DEBUG zad_1.c:290: a is lower case
+23:17:02 DEBUG zad_1.c:290: n is lower case
+23:17:02 DEBUG zad_1.c:290: u is lower case
+23:17:02 DEBUG zad_1.c:290: s is lower case
+23:17:02 DEBUG zad_1.c:290: z is lower case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:307: G is upper case
+23:17:02 DEBUG zad_1.c:312: a is lower case
+23:17:02 DEBUG zad_1.c:312: j is lower case
+23:17:02 DEBUG zad_1.c:312: d is lower case
+23:17:02 DEBUG zad_1.c:312: a is lower case
+23:17:02 INFO  zad_1.c:336: Janusz Gajda is name and sirname
+23:17:02 DEBUG zad_1.c:495: jakis_typo987@student.polsl.pl is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if jakis_typo987@student.polsl.pl has only numbers
+23:17:02 WARN  zad_1.c:28: jakis_typo987@student.polsl.pl has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if jakis_typo987@student.polsl.pl has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: jakis_typo987@student.polsl.pl has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if jakis_typo987@student.polsl.pl has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: jakis_typo987@student.polsl.pl has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if jakis_typo987@student.polsl.pl has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: jakis_typo987@student.polsl.pl has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if jakis_typo987@student.polsl.pl has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:221: j isn't upper case
+23:17:02 INFO  zad_1.c:270: Cheking, if jakis_typo987@student.polsl.pl has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:278: j isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if jakis_typo987@student.polsl.pl has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: j err = 0
+23:17:02 WARN  zad_1.c:479: j fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if jakis_typo987@student.polsl.pl has *@*.* pattern
+23:17:02 DEBUG zad_1.c:360: Found @ at position 14
+23:17:02 DEBUG zad_1.c:366: s is valid domain character
+23:17:02 DEBUG zad_1.c:366: t is valid domain character
+23:17:02 DEBUG zad_1.c:366: u is valid domain character
+23:17:02 DEBUG zad_1.c:366: d is valid domain character
+23:17:02 DEBUG zad_1.c:366: e is valid domain character
+23:17:02 DEBUG zad_1.c:366: n is valid domain character
+23:17:02 DEBUG zad_1.c:366: t is valid domain character
+23:17:02 DEBUG zad_1.c:366: . is valid domain character
+23:17:02 DEBUG zad_1.c:366: p is valid domain character
+23:17:02 DEBUG zad_1.c:366: o is valid domain character
+23:17:02 DEBUG zad_1.c:366: l is valid domain character
+23:17:02 DEBUG zad_1.c:366: s is valid domain character
+23:17:02 DEBUG zad_1.c:366: l is valid domain character
+23:17:02 DEBUG zad_1.c:366: . is valid domain character
+23:17:02 DEBUG zad_1.c:366: p is valid domain character
+23:17:02 DEBUG zad_1.c:366: l is valid domain character
+23:17:02 INFO  zad_1.c:379: jakis_typo987@student.polsl.pl is mail address
+23:17:02 DEBUG zad_1.c:495: Akademicka 2 00-000 Gliwice is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Akademicka 2 00-000 Gliwice has only numbers
+23:17:02 WARN  zad_1.c:28: Akademicka 2 00-000 Gliwice has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Akademicka 2 00-000 Gliwice has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Akademicka 2 00-000 Gliwice has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Akademicka 2 00-000 Gliwice has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Akademicka 2 00-000 Gliwice has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Akademicka 2 00-000 Gliwice has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Akademicka 2 00-000 Gliwice has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Akademicka 2 00-000 Gliwice has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: A is upper case
+23:17:02 DEBUG zad_1.c:233: k is lower case
+23:17:02 DEBUG zad_1.c:233: a is lower case
+23:17:02 DEBUG zad_1.c:233: d is lower case
+23:17:02 DEBUG zad_1.c:233: e is lower case
+23:17:02 DEBUG zad_1.c:233: m is lower case
+23:17:02 DEBUG zad_1.c:233: i is lower case
+23:17:02 DEBUG zad_1.c:233: c is lower case
+23:17:02 DEBUG zad_1.c:233: k is lower case
+23:17:02 DEBUG zad_1.c:233: a is lower case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Akademicka 2 00-000 Gliwice has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: A is upper case
+23:17:02 DEBUG zad_1.c:290: k is lower case
+23:17:02 DEBUG zad_1.c:290: a is lower case
+23:17:02 DEBUG zad_1.c:290: d is lower case
+23:17:02 DEBUG zad_1.c:290: e is lower case
+23:17:02 DEBUG zad_1.c:290: m is lower case
+23:17:02 DEBUG zad_1.c:290: i is lower case
+23:17:02 DEBUG zad_1.c:290: c is lower case
+23:17:02 DEBUG zad_1.c:290: k is lower case
+23:17:02 DEBUG zad_1.c:290: a is lower case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: 2 isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if Akademicka 2 00-000 Gliwice has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: A err = 0
+23:17:02 DEBUG zad_1.c:396: k err = 2
+23:17:02 DEBUG zad_1.c:396: a err = 2
+23:17:02 DEBUG zad_1.c:396: d err = 2
+23:17:02 DEBUG zad_1.c:396: e err = 2
+23:17:02 DEBUG zad_1.c:396: m err = 2
+23:17:02 DEBUG zad_1.c:396: i err = 2
+23:17:02 DEBUG zad_1.c:396: c err = 2
+23:17:02 DEBUG zad_1.c:396: k err = 2
+23:17:02 DEBUG zad_1.c:396: a err = 2
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: 2 err = 3
+23:17:02 DEBUG zad_1.c:396:   err = 4
+23:17:02 DEBUG zad_1.c:439: Found property number
+23:17:02 DEBUG zad_1.c:396: 0 err = 9
+23:17:02 DEBUG zad_1.c:396: 0 err = 10
+23:17:02 DEBUG zad_1.c:396: - err = 11
+23:17:02 DEBUG zad_1.c:396: 0 err = 12
+23:17:02 DEBUG zad_1.c:396: 0 err = 13
+23:17:02 DEBUG zad_1.c:396: 0 err = 14
+23:17:02 DEBUG zad_1.c:460: Found postal code
+23:17:02 DEBUG zad_1.c:396:   err = 15
+23:17:02 DEBUG zad_1.c:396: G err = 19
+23:17:02 DEBUG zad_1.c:396: l err = 16
+23:17:02 DEBUG zad_1.c:396: i err = 16
+23:17:02 DEBUG zad_1.c:396: w err = 16
+23:17:02 DEBUG zad_1.c:396: i err = 16
+23:17:02 DEBUG zad_1.c:396: c err = 16
+23:17:02 DEBUG zad_1.c:396: e err = 16
+23:17:02 DEBUG zad_1.c:485: Found city
+23:17:02 INFO  zad_1.c:486: Akademicka 2 00-000 Gliwice is an address
+23:17:02 DEBUG zad_1.c:495: Z innych ludzi do nikogo, is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Z innych ludzi do nikogo, has only numbers
+23:17:02 WARN  zad_1.c:28: Z innych ludzi do nikogo, has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Z innych ludzi do nikogo, has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Z innych ludzi do nikogo, has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Z innych ludzi do nikogo, has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Z innych ludzi do nikogo, has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Z innych ludzi do nikogo, has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Z innych ludzi do nikogo, has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Z innych ludzi do nikogo, has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: Z is upper case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Z innych ludzi do nikogo, has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: Z is upper case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: i isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if Z innych ludzi do nikogo, has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: Z err = 0
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: i err = 3
+23:17:02 WARN  zad_1.c:479: i fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if Z innych ludzi do nikogo, has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: Z innych ludzi do nikogo, is safe to be passed
+23:17:02 DEBUG zad_1.c:495: Jeno do ciebie, niebogo! is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Jeno do ciebie, niebogo! has only numbers
+23:17:02 WARN  zad_1.c:28: Jeno do ciebie, niebogo! has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Jeno do ciebie, niebogo! has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Jeno do ciebie, niebogo! has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Jeno do ciebie, niebogo! has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Jeno do ciebie, niebogo! has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Jeno do ciebie, niebogo! has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Jeno do ciebie, niebogo! has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Jeno do ciebie, niebogo! has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: J is upper case
+23:17:02 DEBUG zad_1.c:233: e is lower case
+23:17:02 DEBUG zad_1.c:233: n is lower case
+23:17:02 DEBUG zad_1.c:233: o is lower case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Jeno do ciebie, niebogo! has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: J is upper case
+23:17:02 DEBUG zad_1.c:290: e is lower case
+23:17:02 DEBUG zad_1.c:290: n is lower case
+23:17:02 DEBUG zad_1.c:290: o is lower case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: d isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if Jeno do ciebie, niebogo! has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: J err = 0
+23:17:02 DEBUG zad_1.c:396: e err = 2
+23:17:02 DEBUG zad_1.c:396: n err = 2
+23:17:02 DEBUG zad_1.c:396: o err = 2
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: d err = 3
+23:17:02 WARN  zad_1.c:479: d fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if Jeno do ciebie, niebogo! has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: Jeno do ciebie, niebogo! is safe to be passed
+23:17:02 DEBUG zad_1.c:495: Oj, Halino, oj, jedyna is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Oj, Halino, oj, jedyna has only numbers
+23:17:02 WARN  zad_1.c:28: Oj, Halino, oj, jedyna has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Oj, Halino, oj, jedyna has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Oj, Halino, oj, jedyna has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Oj, Halino, oj, jedyna has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Oj, Halino, oj, jedyna has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Oj, Halino, oj, jedyna has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Oj, Halino, oj, jedyna has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Oj, Halino, oj, jedyna has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: O is upper case
+23:17:02 DEBUG zad_1.c:233: j is lower case
+23:17:02 WARN  zad_1.c:251: , fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Oj, Halino, oj, jedyna has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: O is upper case
+23:17:02 DEBUG zad_1.c:290: j is lower case
+23:17:02 WARN  zad_1.c:330: , fell out of pattern
+23:17:02 INFO  zad_1.c:393: Cheking, if Oj, Halino, oj, jedyna has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: O err = 0
+23:17:02 DEBUG zad_1.c:396: j err = 2
+23:17:02 DEBUG zad_1.c:396: , err = 2
+23:17:02 WARN  zad_1.c:479: , fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if Oj, Halino, oj, jedyna has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: Oj, Halino, oj, jedyna is safe to be passed
+23:17:02 DEBUG zad_1.c:495: Dziewczyno moja! Dziewczyno moja! is now being checked
+23:17:02 INFO  zad_1.c:24: Cheking, if Dziewczyno moja! Dziewczyno moja! has only numbers
+23:17:02 WARN  zad_1.c:28: Dziewczyno moja! Dziewczyno moja! has different length range <9,11>
+23:17:02 INFO  zad_1.c:70: Cheking, if Dziewczyno moja! Dziewczyno moja! has ###-##-##-### (NIP) pattern
+23:17:02 WARN  zad_1.c:74: Dziewczyno moja! Dziewczyno moja! has different length than 13
+23:17:02 INFO  zad_1.c:121: Cheking, if Dziewczyno moja! Dziewczyno moja! has ###-###-### or ### ### ### (phone) pattern
+23:17:02 WARN  zad_1.c:125: Dziewczyno moja! Dziewczyno moja! has different length than 11
+23:17:02 INFO  zad_1.c:164: Cheking, if Dziewczyno moja! Dziewczyno moja! has ##-###-##-## or ## ### ## ## (phone) pattern
+23:17:02 WARN  zad_1.c:168: Dziewczyno moja! Dziewczyno moja! has different length than 12
+23:17:02 INFO  zad_1.c:213: Cheking, if Dziewczyno moja! Dziewczyno moja! has Ulll... or  Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:228: D is upper case
+23:17:02 DEBUG zad_1.c:233: z is lower case
+23:17:02 DEBUG zad_1.c:233: i is lower case
+23:17:02 DEBUG zad_1.c:233: e is lower case
+23:17:02 DEBUG zad_1.c:233: w is lower case
+23:17:02 DEBUG zad_1.c:233: c is lower case
+23:17:02 DEBUG zad_1.c:233: z is lower case
+23:17:02 DEBUG zad_1.c:233: y is lower case
+23:17:02 DEBUG zad_1.c:233: n is lower case
+23:17:02 DEBUG zad_1.c:233: o is lower case
+23:17:02 WARN  zad_1.c:251:   fell out of pattern
+23:17:02 INFO  zad_1.c:270: Cheking, if Dziewczyno moja! Dziewczyno moja! has Ulll... Ulll... or Ulll... Ulll...-Ulll... pattern
+23:17:02 DEBUG zad_1.c:285: D is upper case
+23:17:02 DEBUG zad_1.c:290: z is lower case
+23:17:02 DEBUG zad_1.c:290: i is lower case
+23:17:02 DEBUG zad_1.c:290: e is lower case
+23:17:02 DEBUG zad_1.c:290: w is lower case
+23:17:02 DEBUG zad_1.c:290: c is lower case
+23:17:02 DEBUG zad_1.c:290: z is lower case
+23:17:02 DEBUG zad_1.c:290: y is lower case
+23:17:02 DEBUG zad_1.c:290: n is lower case
+23:17:02 DEBUG zad_1.c:290: o is lower case
+23:17:02 DEBUG zad_1.c:295:   is space
+23:17:02 DEBUG zad_1.c:300: m isn't upper case
+23:17:02 INFO  zad_1.c:393: Cheking, if Dziewczyno moja! Dziewczyno moja! has (ul.) Ulll... (###,###l,###/###) ##-### Ulll... pattern
+23:17:02 DEBUG zad_1.c:396: D err = 0
+23:17:02 DEBUG zad_1.c:396: z err = 2
+23:17:02 DEBUG zad_1.c:396: i err = 2
+23:17:02 DEBUG zad_1.c:396: e err = 2
+23:17:02 DEBUG zad_1.c:396: w err = 2
+23:17:02 DEBUG zad_1.c:396: c err = 2
+23:17:02 DEBUG zad_1.c:396: z err = 2
+23:17:02 DEBUG zad_1.c:396: y err = 2
+23:17:02 DEBUG zad_1.c:396: n err = 2
+23:17:02 DEBUG zad_1.c:396: o err = 2
+23:17:02 DEBUG zad_1.c:396:   err = 2
+23:17:02 DEBUG zad_1.c:416: Found street name
+23:17:02 DEBUG zad_1.c:396: m err = 3
+23:17:02 WARN  zad_1.c:479: m fell out of pattern
+23:17:02 INFO  zad_1.c:348: Cheking, if Dziewczyno moja! Dziewczyno moja! has *@*.* pattern
+23:17:02 INFO  zad_1.c:527: Dziewczyno moja! Dziewczyno moja! is safe to be passed
