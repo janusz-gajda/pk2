@@ -8,7 +8,7 @@
 #define MAX_SIZE 512
 
 #ifndef ERROR_FILE
-#define ERROR_FILE "log.log"
+#define ERROR_FILE "log_1.log"
 #endif
 
 // # - digit
