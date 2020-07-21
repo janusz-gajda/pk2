@@ -1,7 +1,6 @@
-/*  checkthis.c  */
 //TODO:
-// Set array = 0 when error
-// Think, how to act, when error further down the line
+// Set array = 0 when error DONE, we set it when valid
+// Think, how to act, when error further down the line, DONE
 #include <ncurses.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -12,57 +11,44 @@
 void print_array_ncurses(WINDOW *win,int *array, int *positions_y, int *positions_x){
     for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){
-            mvwprintw (win,*(positions_y + ( i * 8) + j), *(positions_x + ( i * 8) + j), "%d", *(array + ( i * 8) + j));  
+            if(*(array + (i*8) + j) == 0)
+                mvwprintw (win,*(positions_y + (i*8) + j), *(positions_x + (i*8) + j), "%c", '-';
+            else
+                mvwprintw (win,*(positions_y + (i*8) + j), *(positions_x + (i*8) + j), "%d", *(array + (i*8) + j));      
         }    
     }
+    wrefresh(win);
 }
 
-int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, int y, int x){
-    // if is given as hint, let's go to another one
-    if(*(array + ( y * 8) + x) != 0){
-        //if is end of array
-        if(x == 8 && y == 8){
-            return 1;
-        } // if end of row 
-        else if(x == 8){
-            return sudoku_solver(win,array,positions_y,positions_x,y+1,0);
-        } else{
-            return sudoku_solver(win,array,positions_y,positions_x,y,x+1);
-        }
-    }else{
-        //if is empty
-        int all_good = 0;
-        int z = 1;
-        for(z = 1; z < 10; z++){
-            *(array + (y*8) + x) = z;
+int sudoku_checker(int *array,int x, int y, int value){
             int err = 0;
             //check, if error in col
             for(int i = 0; i < 9; i++){
                 if(i == y){
                     continue;
                 }
-                else if(*(array + (i*8) + x) == *(array + (y*8) + x)){
+                else if(*(array + (i*8) + x) == value){
                     err = 1; 
                     break;
                 }
             }
             if(err == 1){
-                continue;
+                return 0;
             }
             //check, if error in row
             for(int i = 0; i < 9; i++){
                 if(i == x){
                     continue;
                 }
-                else if(*(array + (y*8) + i) == *(array + (y*8) + x)){
+                else if(*(array + (y*8) + i) == value){
                     err = 1; 
                     break;
                 }
             }
              if(err == 1){
-                continue;
+                return 0;
             }
-            //checki, if error in 3x3 grid
+            //check, if error in 3x3 grid
 
             //determine, which 3x3 grid to compare against
             int grid_y, grid_x; //address of first number in grid
@@ -83,7 +69,11 @@ int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, in
             int temp_y = grid_y, temp_x = grid_x
             while(temp_y < grid_y+3){
                 while(temp_x < grid_x+3){
-                    if(*(array + (y*8) + x) == *(array + (grid_y*8) + grid_x)){
+                    if(temp_y == y || temp_x == x){
+                        //we already checked that, also we exclude comare againts it self
+                        continue;
+                    }
+                    if(value == *(array + (grid_y*8) + grid_x)){
                         err = 1;
                         break;
                     }
@@ -93,27 +83,56 @@ int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, in
                 temp_y++;
             }
             if(err == 1){
-                continue;
+                return 0;
             }
-            all_good = 1;         
+            return 1;      
 
         }
-        if(all_good == 0){
-            return 0;
-        }else{
-            int temp;
-            if(x == 8 && y == 8){
-                return 1;
-            } // if end of row 
-            else if(x == 8){
-                temp = sudoku_solver(win,array,positions_y,positions_x,y+1,0);
-            } else{
-                temp = sudoku_solver(win,array,positions_y,positions_x,y,x+1);
-            }
-            if(temp == 1){
-                return 1;
-            }else
+
+int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, int y, int x){
+    // if is given as hint, let's go to another one
+    if(*(array + ( y * 8) + x) != 0){
+        //if is end of array
+        if(x == 8 && y == 8){
+            return 1;
+        } // if end of row 
+        else if(x == 8){
+            return sudoku_solver(win,array,positions_y,positions_x,y+1,0);
+        } else{
+            return sudoku_solver(win,array,positions_y,positions_x,y,x+1);
         }
+    }else{
+        //if is empty
+        int all_good = 0;
+        int z = 1;
+        int valid = 0;
+        int next;
+        for(z = 1; z < 10; z++){
+            mvwprintw(win,*(positions_y + (y*8) + x), *(positions_x + (y*8) + x), "%d", value);
+            wrefresh(win);
+            valid = sudoku_checker(array, x, y, z);
+            if(valid == 0)
+                continue;
+
+            *(array + (y*8) + x) = z;
+            if(y == 8 && x == 8){
+                return 1;
+            }else if(x == 8){
+                next = sudoku_solver(win,array,positions_y,positions_x,y+1,0);
+            } else{
+                next = sudoku_solver(win,array,positions_y,positions_x,y,x+1);
+            }
+            if(next == 0){
+                continue;
+            }else{
+                return 1;
+            }
+        }
+         mvwprintw(win,*(positions_y + (y*8) + x), *(positions_x + (y*8) + x), "%c", '-');
+        wrefresh(win);
+        return 0;
+
+        
     }
 }
 /*int calculate_x(int &x[9][9], int &y){
