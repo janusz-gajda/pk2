@@ -61,68 +61,65 @@ int sudoku_checker(int *array,int x, int y, int value){
 
             if(x < 3)
                 grid_x = 0;
-            else if(y < 6)
+            else if(x < 6)
                 grid_x = 3;
             else
                 grid_x = 6;
 
-            int temp_y = grid_y, temp_x = grid_x;
-            while(temp_y < grid_y+3){
-                while(temp_x < grid_x+3){
-                    if(temp_y == y || temp_x == x){
+           for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    if(grid_y + i == y || grid_x + j == x){
                         //we already checked that, also we exclude comare againts it self
                         continue;
                     }
-                    if(value == *(array + (grid_y*9) + grid_x)){
+                    if(value == *(array + (grid_y*9) + (i*9) + grid_x + j)){
                         err = 1;
                         break;
                     }
-                    temp_x++;
                 }
-                temp_x = grid_x;
-                temp_y++;
             }
             if(err == 1){
                 return 0;
+            }else {
+                return 1;      
             }
-            return 1;      
-
         }
 
-int sudoku_solver(int *array, int *positions_y, int *positions_x, int y, int x){ //WINDOW *win,
+int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, int y, int x){
     // if is given as hint, let's go to another one
-    printf("x = %d y = %d\n",x,y);
     if(*(array + ( y * 9) + x) != 0){
         //if is end of array
         if(x == 8 && y == 8){
             return 1;
         } // if end of row 
         else if(x == 8){
-            return sudoku_solver(array,positions_y,positions_x,y+1,0);
+            return sudoku_solver(win,array,positions_y,positions_x,y+1,0);
         } else{
-            return sudoku_solver(array,positions_y,positions_x,y,x+1);
+            return sudoku_solver(win,array,positions_y,positions_x,y,x+1);
         }
     }else{
         //if is empty
         int z = 1;
         int valid = 0;
-        int next;
+        int next = -1;
         for(z = 1; z < 10; z++){
-            //mvwprintw(win,*(positions_y + y), *(positions_x + x), "%d", z);
-            //wrefresh(win);
-            printf("z = %d\n", z);
+            mvwprintw(win,*(positions_y + y), *(positions_x + x), "%d", z);
+            wrefresh(win);
+            //printf("x = %d y = %d z = %d\n",x,y,z);
             valid = sudoku_checker(array, x, y, z);
-            if(valid == 0)
+            if(valid == 0){
                 continue;
-
+            }
+            
             *(array + (y*9) + x) = z;
             if(y == 8 && x == 8){
                 return 1;
             }else if(x == 8){
-                next = sudoku_solver(array,positions_y,positions_x,y+1,0);
+                next = sudoku_solver(win,array,positions_y,positions_x,y+1,0);
             } else{
-                next = sudoku_solver(array,positions_y,positions_x,y,x+1);
+                next = sudoku_solver(win,array,positions_y,positions_x,y,x+1);
             }
+
             if(next == 0){
                 continue;
             }else{
@@ -130,8 +127,8 @@ int sudoku_solver(int *array, int *positions_y, int *positions_x, int y, int x){
             }
         }
         *(array + (y*9) + x) = 0;
-        //mvwprintw(win,*(positions_y + y), *(positions_x + x), "%c", '-');
-        //wrefresh(win);
+        mvwprintw(win,*(positions_y + y), *(positions_x + x), "%c", '-');
+        wrefresh(win);
         return 0;
 
         
@@ -194,17 +191,17 @@ height = 13;
 width = 23;
 starty = (LINES - height) / 2;
 startx = (COLS - width) / 2;
-//WINDOW *win = newwin(height, width, starty, startx);
-sudoku_solver(grid_p,pos_y_p,pos_x_p,0,0);
-//refresh();
+WINDOW *win = newwin(height, width, starty, startx);
+refresh();
 //box(win,0,0);
-/*wrefresh(win);
+wrefresh(win);
 
 
 curs_set (0);
 print_array_ncurses(win,grid_p,pos_y_p,pos_x_p);
-
-print_array_ncurses(win,grid_p,pos_y_p,pos_x_p);*/
+getch();
+sudoku_solver(win,grid_p,pos_y_p,pos_x_p,0,0);
+print_array_ncurses(win,grid_p,pos_y_p,pos_x_p);
 getch();
 /*int l = 0;
 while(l < 10000){
@@ -223,7 +220,7 @@ while(l < 10000){
     l++;
     //int k = getch();
 }  */  
-//endwin();
+endwin();
 /*clock_t end = clock();
 double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 printf("1000 iterations took %f seconds\n", time_spent);*/
