@@ -59,3 +59,4 @@ dkms.conf
 lab_3/json.json
 lab_3/propertis.da
 projekt/test
+!projekt/*.csv
