@@ -8,6 +8,18 @@
 #include <time.h>
 #include <signal.h>
 
+void print_ncurses(WINDOW *win, int *positions_y, int *positions_x, int y, int x ,int value, int *refresh){
+    mvwprintw(win,*(positions_y + y), *(positions_x + x), "%d", value);
+    if(*(refresh) < 300){
+        *(refresh)++;
+    } else{
+        wrefresh(win);
+        *(refresh) = 0;
+    }
+    
+}
+
+
 void print_array_ncurses(WINDOW *win,int *array, int *positions_y, int *positions_x){
     for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){
@@ -85,7 +97,7 @@ int sudoku_checker(int *array,int x, int y, int value){
             }
         }
 
-int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, int y, int x){
+int sudoku_solver(WINDOW *win,int *refresh ,int *array, int *positions_y, int *positions_x, int y, int x){
     // if is given as hint, let's go to another one
     if(*(array + ( y * 9) + x) != 0){
         //if is end of array
@@ -93,9 +105,9 @@ int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, in
             return 1;
         } // if end of row 
         else if(x == 8){
-            return sudoku_solver(win,array,positions_y,positions_x,y+1,0);
+            return sudoku_solver(win,refresh,array,positions_y,positions_x,y+1,0);
         } else{
-            return sudoku_solver(win,array,positions_y,positions_x,y,x+1);
+            return sudoku_solver(win,refresh,array,positions_y,positions_x,y,x+1);
         }
     }else{
         //if is empty
@@ -103,9 +115,7 @@ int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, in
         int valid = 0;
         int next = -1;
         for(z = 1; z < 10; z++){
-            mvwprintw(win,*(positions_y + y), *(positions_x + x), "%d", z);
-            wrefresh(win);
-            //printf("x = %d y = %d z = %d\n",x,y,z);
+            print_ncurses(win,positions_y,positions_x,y,x,z,refresh);
             valid = sudoku_checker(array, x, y, z);
             if(valid == 0){
                 continue;
@@ -115,9 +125,9 @@ int sudoku_solver(WINDOW *win,int *array, int *positions_y, int *positions_x, in
             if(y == 8 && x == 8){
                 return 1;
             }else if(x == 8){
-                next = sudoku_solver(win,array,positions_y,positions_x,y+1,0);
+                next = sudoku_solver(win,refresh,array,positions_y,positions_x,y+1,0);
             } else{
-                next = sudoku_solver(win,array,positions_y,positions_x,y,x+1);
+                next = sudoku_solver(win,refresh,array,positions_y,positions_x,y,x+1);
             }
 
             if(next == 0){
@@ -148,6 +158,8 @@ for(int i = 0; i < 9; i++){
 }
 
 int main(int arg, char *argv[]){
+int refresh_counter = 0;
+int *refresh_p = &refresh_counter;
 int positions_x[9], positions_y[9], grid[9][9];
 int *pos_x_p = &positions_x[0];
 int *pos_y_p = &positions_y[0];
@@ -188,7 +200,6 @@ starty = (LINES - height) / 2;
 startx = (COLS - width) / 2;
 WINDOW *win = newwin(height, width, starty, startx);
 refresh();
-//box(win,0,0);
 wrefresh(win);
 
 
@@ -196,27 +207,10 @@ curs_set (0);
 print_array_ncurses(win,grid_p,pos_y_p,pos_x_p);
 getch();
 clock_t start = clock();
-sudoku_solver(win,grid_p,pos_y_p,pos_x_p,0,0);
+sudoku_solver(win,refresh_p,grid_p,pos_y_p,pos_x_p,0,0);
 clock_t end = clock();
 print_array_ncurses(win,grid_p,pos_y_p,pos_x_p);
-getch();
-/*int l = 0;
-while(l < 10000){
-    for(int i = 0; i < 9; i++){
-        for(int j = 0; j < 9; j++){
-            c = rand() % 10;
-            int y = i+i_offsett;
-            int x = (j*2)+j_offsett;
-            mvwprintw (win,positions_y[i][j], positions_x[i][j], "%d", c);
-            
-        }    
-    }
-    wrefresh (win);
-    i_offsett = 1;
-    i_counter = 0;
-    l++;
-    //int k = getch();
-}  */  
+getch(); 
 endwin();
 double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
 printf("Solving this puzzle took %f seconds\n", time_spent);
