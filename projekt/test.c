@@ -148,7 +148,6 @@ for(int i = 0; i < 9; i++){
 }
 
 int main(int arg, char *argv[]){
-clock_t begin = clock();
 int positions_x[9], positions_y[9], grid[9][9];
 int *pos_x_p = &positions_x[0];
 int *pos_y_p = &positions_y[0];
@@ -177,11 +176,7 @@ while((fscanf(source, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n",&p0,&p1,&p2,&p3,&p4,&p5,&p6
 }
 
 
-int seed;
 time_t tt;
-int c = 0;
-seed = time(&tt);
-srand(seed);
 //Starting ncurses screen
 initscr();
 crmode();
@@ -200,7 +195,9 @@ wrefresh(win);
 curs_set (0);
 print_array_ncurses(win,grid_p,pos_y_p,pos_x_p);
 getch();
+clock_t start = clock();
 sudoku_solver(win,grid_p,pos_y_p,pos_x_p,0,0);
+clock_t end = clock();
 print_array_ncurses(win,grid_p,pos_y_p,pos_x_p);
 getch();
 /*int l = 0;
@@ -221,9 +218,8 @@ while(l < 10000){
     //int k = getch();
 }  */  
 endwin();
-/*clock_t end = clock();
-double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-printf("1000 iterations took %f seconds\n", time_spent);*/
+double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+printf("Solving this puzzle took %f seconds\n", time_spent);
 return 0;
 
 }
