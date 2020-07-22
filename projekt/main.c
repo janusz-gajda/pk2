@@ -1,6 +1,12 @@
-//TODO:
-// Set array = 0 when error DONE, we set it when valid
-// Think, how to act, when error further down the line, DONE
+//CLI arguments
+//-h --help - shows help
+//-i --input - input CSV formated puzzle
+//-s --setup - launch into CLI menu
+//-o --output - save solved puzzle into CSV file
+//-p --previous - shows history of puzzles
+//-l [id] --launch [id] - launch privious puzzle
+//[none] - shows help
+
 #include <ncurses.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -9,63 +15,50 @@
 #include <signal.h>
 
 unsigned int REFRESH_COUNTER = 0;
-unsigned int ITERATION_COUNTER = 0;
+unsigned long int ITERATION_COUNTER = 0;
+unsigned long int POINTER_COUNTER = 1;
+unsigned long int COMPARISON_COUNTER = 0;
 
-void print_array_ncurses(WINDOW *win,int *array, int *positions_y, int *positions_x){
+void print_array_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
     for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){
-            if(*(array + (i*9) + j) == 0)
-                mvwprintw (win,*(positions_y + i), *(positions_x + j), ".");
+            if(!*(array + (i*9) + j))
+                mvwprintw(win, *(positions_y + i), *(positions_x + j), ".");
             else
-                mvwprintw (win,*(positions_y + i), *(positions_x + j), "%d", *(array + (i*9) + j));      
+                mvwprintw(win, *(positions_y + i), *(positions_x + j), "%d", *(array + (i*9) + j));      
         }    
     }
     wrefresh(win);
 }
 
-void print_ncurses(WINDOW *win,int *array ,int *positions_y, int *positions_x){
-    if(REFRESH_COUNTER < 1000000){
+void print_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
+    if(REFRESH_COUNTER < 500000){
         REFRESH_COUNTER++;
     } else{
-        print_array_ncurses(win,array,positions_y,positions_x);
+        print_array_ncurses(win, array, positions_y, positions_x);
         REFRESH_COUNTER = 0;
     }
-    ITERATION_COUNTER++;
-    
+
+    ITERATION_COUNTER++; 
 }
 
-
-int sudoku_checker(int *array,int x, int y, int value){
+int sudoku_checker(int *array, int x, int y, int value){
     int err = 0;
-    //check, if error in col
+    //check, if error in col or in row
     for(int i = 0; i < 9; i++){
-        if(i == y){
-            continue;
-        }
-        else if(*(array + (i*9) + x) == value){
+        COMPARISON_COUNTER++;
+        if(*(array + (y*9) + i) == value && i != x){
+            err = 1; 
+            break;
+        } else if(*(array + (i*9) + x) == value && i != y){ 
             err = 1; 
             break;
         }
     }
 
-    if(err == 1){
+    if(err)
         return 0;
-    }
 
-    //check, if error in row
-    for(int i = 0; i < 9; i++){
-        if(i == x){
-            continue;
-        } else if(*(array + (y*9) + i) == value){
-            err = 1; 
-            break;
-        }
-    }
-
-    if(err == 1){
-        return 0;
-    }
-    //check, if error in 3x3 grid
 
     //determine, which 3x3 grid to compare against
     int grid_y, grid_x; //address of first number in grid
@@ -84,10 +77,11 @@ int sudoku_checker(int *array,int x, int y, int value){
     else
         grid_x = 6;
 
+    //check, if error in 3x3 grid
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
-            if(grid_y + i == y || grid_x + j == x){
-                //we already checked that, also we exclude comare againts it self
+            COMPARISON_COUNTER++;
+            if(grid_y + i == y || grid_x + j == x){ //we already checked that, also we exclude compare againts it self
                 continue;
             }
             if(*(array + (grid_y*9) + (i*9) + grid_x + j) == value){
@@ -97,61 +91,60 @@ int sudoku_checker(int *array,int x, int y, int value){
         }
     }
 
-    if(err == 1){
+    if(err)
         return 0;
-    } else{
-        return 1;      
-    }
+    else
+        return 1;
+
 }
 
 int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, int y, int x){
-    if(*(array + ( y * 9) + x) != 0){ // if is given as hint, let's go to another one
-        if(x == 8 && y == 8){ //if is end of array
+    if(*(array + ( y * 9) + x)){ // if is given as hint, let's go to another one
+        POINTER_COUNTER++;
+        if(x == 8 && y == 8) //if is end of array
             return 1;
-        } else if(x == 8){ // if end of row
-            return sudoku_solver(win,array,positions_y,positions_x,y+1,0);
-        } else{
-            return sudoku_solver(win,array,positions_y,positions_x,y,x+1);
-        }
-    }else{ //if is empty 
-        int z = 1;
-        int valid = 0;
-        int next = 0;
-        for(z = 1; z < 10; z++){
-            print_ncurses(win,array,positions_y,positions_x);
-            valid = sudoku_checker(array, x, y, z);
-            if(valid == 0){
+        else if(x == 8) //if end of row
+            return sudoku_solver(win, array, positions_y, positions_x, y+1, 0);
+        else
+            return sudoku_solver(win, array, positions_y, positions_x, y, x+1);
+    } else{ //if is empty 
+        for(int z = 1; z < 10; z++){
+            print_ncurses(win, array, positions_y, positions_x);
+
+            if(!sudoku_checker(array, x, y, z))
                 continue;
-            }
             
             *(array + (y*9) + x) = z;
-            if(y == 8 && x == 8){
-                return 1;
-            }else if(x == 8){
-                next = sudoku_solver(win,array,positions_y,positions_x,y+1,0);
-            } else{
-                next = sudoku_solver(win,array,positions_y,positions_x,y,x+1);
-            }
+            POINTER_COUNTER++;
 
-            if(next == 0){
-                continue;
-            } else{
+            if(y == 8 && x == 8)
                 return 1;
-            }
+            else if(x == 8)
+                if(!sudoku_solver(win,array,positions_y,positions_x,y+1,0))
+                    continue;
+                else
+                    return 1;
+            else
+                if(!sudoku_solver(win,array,positions_y,positions_x,y,x+1))
+                    continue;
+                else
+                    return 1;    
         }
+
         *(array + (y*9) + x) = 0;
         print_ncurses(win,array,positions_y,positions_x);
-        return 0;
+        POINTER_COUNTER++;
 
-        
+        return 0;
     }
 }
+
 void calculate_positions(int *x, int *y){
     int i_offsett = 1;
     int j_offsett = 1;
     for(int i = 0; i < 9; i++){
-        *(x + i) = (i*2)+j_offsett;
-        *(y + i) = i+i_offsett;
+        *(x + i) = (i*2) + j_offsett;
+        *(y + i) = i + i_offsett;
 
         if(i == 2 || i == 5){
             i_offsett += 1;
@@ -173,7 +166,7 @@ int main(int arg, char *argv[]){
     FILE *source = fopen(argv[1], "r");
     int p0, p1, p2, p3, p4, p5, p6, p7, p8;
     int i = 0;
-    while((fscanf(source, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n",&p0,&p1,&p2,&p3,&p4,&p5,&p6,&p7,&p8)) != EOF){
+    while(fscanf(source, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n",&p0,&p1,&p2,&p3,&p4,&p5,&p6,&p7,&p8) != EOF){
         grid[i][0] = p0;
         grid[i][1] = p1;
         grid[i][2] = p2;
@@ -182,9 +175,9 @@ int main(int arg, char *argv[]){
         grid[i][5] = p5;
         grid[i][6] = p6;
         grid[i][7] = p7;
-        grid[i][8] = p8;
-        
+        grid[i][8] = p8; 
         i++;
+
         if(i > 8)
             break;
     }
@@ -193,9 +186,10 @@ int main(int arg, char *argv[]){
     initscr();
     crmode();
     cbreak();
+
     int start_x, start_y, width, height;
     height = 13;
-    width = 20;
+    width = 23;
     start_y = (LINES - height) / 2;
     start_x = (COLS - width) / 2;
 
@@ -217,9 +211,13 @@ int main(int arg, char *argv[]){
     endwin();
 
     double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Iterations: %u\n",ITERATION_COUNTER);
-    printf("Solving this puzzle took %f seconds\n", time_spent);
+    printf("Solving this puzzle took %.3f seconds\n", time_spent);
+    printf("Iterations: %lu\n", ITERATION_COUNTER);
+    printf("Comparisons: %lu\n", COMPARISON_COUNTER);
+    printf("Pointer moves: %lu\n", POINTER_COUNTER);
+    printf("Iterations per second: %.2f\n", (double)(ITERATION_COUNTER / time_spent));
+    printf("Comparisons per second: %.2f\n", (double)(COMPARISON_COUNTER / time_spent));
+    printf("Pointers moves per second: %.2f\n", (double)(POINTER_COUNTER / time_spent));
 
     return 0;
-
 }
