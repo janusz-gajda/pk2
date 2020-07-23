@@ -1,7 +1,10 @@
-all: main
+all: debug
 
-main : main.c
+relese : main.c
 	gcc -o main main.c -lncurses -O2
+
+debug : main.c
+	gcc -o main main.c -lncurses
 
 clean: 
 	rm main

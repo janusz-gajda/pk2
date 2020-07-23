@@ -14,6 +14,8 @@
 #include <time.h>
 #include <signal.h>
 
+#define REFRESH_INTERVAL 1000000
+
 unsigned int REFRESH_COUNTER = 0;
 unsigned long int ITERATION_COUNTER = 0;
 unsigned long int POINTER_COUNTER = 1;
@@ -32,7 +34,7 @@ void print_array_ncurses(WINDOW *win, int *array, int *positions_y, int *positio
 }
 
 void print_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
-    if(REFRESH_COUNTER < 500000){
+    if(REFRESH_COUNTER < REFRESH_INTERVAL){
         REFRESH_COUNTER++;
     } else{
         print_array_ncurses(win, array, positions_y, positions_x);
@@ -212,11 +214,11 @@ int main(int arg, char *argv[]){
 
     double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
     printf("Solving this puzzle took %.3f seconds\n", time_spent);
-    printf("Iterations: %lu\n", ITERATION_COUNTER);
-    printf("Comparisons: %lu\n", COMPARISON_COUNTER);
-    printf("Pointer moves: %lu\n", POINTER_COUNTER);
-    printf("Iterations per second: %.2f\n", (double)(ITERATION_COUNTER / time_spent));
-    printf("Comparisons per second: %.2f\n", (double)(COMPARISON_COUNTER / time_spent));
+    printf("Iterations:    %lu\n", ITERATION_COUNTER);
+    printf("Comparisons:   %lu\n", COMPARISON_COUNTER);
+    printf("Pointer moves: %lu\n\n", POINTER_COUNTER);
+    printf("Iterations per second:     %.2f\n", (double)(ITERATION_COUNTER / time_spent));
+    printf("Comparisons per second:    %.2f\n", (double)(COMPARISON_COUNTER / time_spent));
     printf("Pointers moves per second: %.2f\n", (double)(POINTER_COUNTER / time_spent));
 
     return 0;
