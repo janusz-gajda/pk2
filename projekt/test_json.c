@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "src/cJSON/cJSON.c"
+#include "src/functions.c"
+
 
 char *create_monitor(void)
 {
