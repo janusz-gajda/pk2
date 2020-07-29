@@ -1,19 +1,23 @@
 #include <ncurses.h>
+#include <stdlib.h>
 #include "cJSON/cJSON.c"
 
 #define REFRESH_INTERVAL 1000000
 
 unsigned int REFRESH_COUNTER = 0;
-unsigned long int ITERATION_COUNTER = 0;
-unsigned long int POINTER_COUNTER = 1;
-unsigned long int COMPARISON_COUNTER = 0;
 
-uint32_t create_hash(char *key, size_t len)
-{
+long string_length(FILE *src){
+    fseek(src, 0, SEEK_END);
+    long fsize = ftell(src);
+    fseek(src, 0, SEEK_SET);
+    return fsize;
+}
+
+uint32_t create_hash(int *array){
     uint32_t hash, i;
-    for(hash = i = 0; i < len; ++i)
+    for(hash = i = 0; i < 81; ++i)
     {
-        hash += key[i];
+        hash += *(array + i);
         hash += (hash << 10);
         hash ^= (hash >> 6);
     }
@@ -157,22 +161,99 @@ void calculate_positions(int *x, int *y){
     }
 }
 
-void read_array_from_file(FILE *source, int *array){
+void read_array_from_file(FILE *source, int *array_before, int *array_after){
     int i = 0;
     int p0, p1, p2, p3, p4, p5, p6, p7, p8;
     while(fscanf(source, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n",&p0,&p1,&p2,&p3,&p4,&p5,&p6,&p7,&p8) != EOF){
-        *(array + (i*9) + 0) = p0;
-        *(array + (i*9) + 1) = p1;
-        *(array + (i*9) + 2) = p2;
-        *(array + (i*9) + 3) = p3;
-        *(array + (i*9) + 4) = p4;
-        *(array + (i*9) + 5) = p5;
-        *(array + (i*9) + 6) = p6;
-        *(array + (i*9) + 7) = p7;
-        *(array + (i*9) + 8) = p8; 
+        *(array_before + (i*9) + 0) = *(array_after + (i*9) + 0) = p0;
+        *(array_before + (i*9) + 1) = *(array_after + (i*9) + 1) = p1;
+        *(array_before + (i*9) + 2) = *(array_after + (i*9) + 2) = p2;
+        *(array_before + (i*9) + 3) = *(array_after + (i*9) + 3) = p3;
+        *(array_before + (i*9) + 4) = *(array_after + (i*9) + 4) = p4;
+        *(array_before + (i*9) + 5) = *(array_after + (i*9) + 5) = p5;
+        *(array_before + (i*9) + 6) = *(array_after + (i*9) + 6) = p6;
+        *(array_before + (i*9) + 7) = *(array_after + (i*9) + 7) = p7;
+        *(array_before + (i*9) + 8) = *(array_after + (i*9) + 8) = p8; 
         i++;
 
         if(i > 8)
             break;
     }
+}
+
+char *json_create_missing(void){
+    char *string = NULL;
+    cJSON *main = cJSON_CreateObject();
+    cJSON *history = cJSON_CreateArray();
+    cJSON *hashes = cJSON_CreateArray();
+    cJSON_AddItemToObject(main, "history", history);
+    cJSON_AddItemToObject(main, "hashes", hashes);
+    string = cJSON_Print(main);
+    cJSON_Delete(main);
+    return string;
+}
+char *json_create_object(int *array_before, int *array_after, uint32_t hash, char *json_string, long size){
+    char *string = NULL;
+    cJSON *json_main = cJSON_ParseWithLength(json_string,size);
+    cJSON *object = cJSON_CreateObject();
+    cJSON *hash_hashes = cJSON_CreateNumber(hash);
+    cJSON *hash_history = cJSON_CreateNumber(hash);
+
+    cJSON *before_solving = NULL;
+    cJSON *after_solving = NULL;
+    cJSON *before_element = NULL;
+    cJSON *after_element = NULL;
+
+    cJSON *history = cJSON_GetObjectItemCaseSensitive(json_main, "history");
+    cJSON *hashes = cJSON_GetObjectItemCaseSensitive(json_main, "hashes");
+
+    before_solving = cJSON_CreateArray();
+    after_solving = cJSON_CreateArray();
+
+    for(int i = 0; i < 9; i++){
+        for(int j = 0; j < 9; j++){
+            before_element = cJSON_CreateNumber(*(array_before + (i*9) + j));
+            after_element = cJSON_CreateNumber(*(array_after + (i*9) + j));
+            cJSON_AddItemToArray(before_solving,before_element);
+            cJSON_AddItemToArray(after_solving,after_element);
+        }
+    }
+
+    cJSON_AddItemToObject(object, "hash", hash_history);
+    cJSON_AddItemToObject(object, "before_solving", before_solving);
+    cJSON_AddItemToObject(object, "after_solving", after_solving);
+    cJSON_AddItemToArray(history, object);
+    cJSON_AddItemToArray(hashes, hash_hashes);
+
+    string = cJSON_Print(json_main);
+    cJSON_Delete(json_main);
+    return string;
+
+}
+
+int is_empty(FILE *src){
+    char ch;
+    while((ch = getc(src)) != EOF){
+        if(!isspace(ch)){
+            rewind(src);
+            return 0;
+        }
+    }
+    rewind(src);
+    return 1;
+}
+
+int json_compare_hash(char *string, long len, uint32_t hash){
+    cJSON *main = cJSON_ParseWithLength(string, len);
+    cJSON *hashes = cJSON_GetObjectItemCaseSensitive(main, "hashes");
+    cJSON *item = NULL;
+
+    cJSON_ArrayForEach(item, hashes){
+        if(item->valuedouble == hash){
+            cJSON_Delete(main);
+            return 1;
+        }
+    }
+    cJSON_Delete(main);
+    return 0;
 }

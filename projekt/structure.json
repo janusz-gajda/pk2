@@ -1,17 +1,15 @@
 {
     "history":[
         {
-        "hash": "",
-        "date": "",
+        "hash": ,
         "before_solving": [],
         "after_solving": []
         },
         {
-        "hash": "",
-        "date": "",
+        "hash": ,
         "before_solving": [],
         "after_solving": []
         }
     ],
-    "hashes": ["","",""]
+    "hashes": ["",""]
 }
