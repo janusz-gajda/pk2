@@ -47,14 +47,12 @@ void print_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
         REFRESH_COUNTER = 0;
     }
 
-    ITERATION_COUNTER++; 
 }
 
 int sudoku_checker(int *array, int x, int y, int value){
     int err = 0;
     //check, if error in col or in row
     for(int i = 0; i < 9; i++){
-        COMPARISON_COUNTER++;
         if(*(array + (y*9) + i) == value && i != x){
             err = 1; 
             break;
@@ -88,7 +86,6 @@ int sudoku_checker(int *array, int x, int y, int value){
     //check, if error in 3x3 grid
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
-            COMPARISON_COUNTER++;
             if(grid_y + i == y || grid_x + j == x){ //we already checked that, also we exclude compare againts it self
                 continue;
             }
@@ -108,7 +105,6 @@ int sudoku_checker(int *array, int x, int y, int value){
 
 int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, int y, int x){
     if(*(array + ( y * 9) + x)){ // if is given as hint, let's go to another one
-        POINTER_COUNTER++;
         if(x == 8 && y == 8) //if is end of array
             return 1;
         else if(x == 8) //if end of row
@@ -123,7 +119,6 @@ int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, i
                 continue;
             
             *(array + (y*9) + x) = z;
-            POINTER_COUNTER++;
 
             if(y == 8 && x == 8)
                 return 1;
@@ -141,7 +136,6 @@ int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, i
 
         *(array + (y*9) + x) = 0;
         print_ncurses(win,array,positions_y,positions_x);
-        POINTER_COUNTER++;
 
         return 0;
     }
