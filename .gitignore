@@ -61,6 +61,5 @@ lab_3/propertis.da
 projekt/test
 !projekt/*.csv
 projekt/main
-projekt/test.json
-projekt/test_json.c
-projekt/temp.json
+projekt/test*.*
+projekt/temp*.*

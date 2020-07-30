@@ -4,13 +4,25 @@
 
 #define REFRESH_INTERVAL 1000000
 
-unsigned int REFRESH_COUNTER = 0;
+uint32_t REFRESH_COUNTER = 0;
 
-long string_length(FILE *src){
+long file_size(FILE *src){
     fseek(src, 0, SEEK_END);
     long fsize = ftell(src);
     fseek(src, 0, SEEK_SET);
     return fsize;
+}
+
+int is_empty(FILE *src){
+    char ch;
+    while((ch = getc(src)) != EOF){
+        if(!isspace(ch)){
+            rewind(src);
+            return 0;
+        }
+    }
+    rewind(src);
+    return 1;
 }
 
 uint32_t create_hash(int *array){
@@ -38,7 +50,19 @@ void print_array_ncurses(WINDOW *win, int *array, int *positions_y, int *positio
     }
     wrefresh(win);
 }
-
+/*
+void print_json_ncurses(WINDOW *win, cJSON *array, int*positions_y, int*positions_x){
+    int i = 0;
+    cJSON *element = NULL;
+    cJSON_ArrayForEach(element, array){
+        if(!element->valuedouble){
+            mvwprintw(win, *(positions_y + (i/9)), *(positions_x + (i%9)), ".");
+        } else{
+            mvwprintw(win, *(positions_y + (i/9)), *(positions_x + (i%9)), "%d", element->valuedouble);
+        }
+    }
+}
+*/
 void print_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
     if(REFRESH_COUNTER < REFRESH_INTERVAL){
         REFRESH_COUNTER++;
@@ -225,18 +249,6 @@ char *json_create_object(int *array_before, int *array_after, uint32_t hash, cha
 
 }
 
-int is_empty(FILE *src){
-    char ch;
-    while((ch = getc(src)) != EOF){
-        if(!isspace(ch)){
-            rewind(src);
-            return 0;
-        }
-    }
-    rewind(src);
-    return 1;
-}
-
 int json_compare_hash(char *string, long len, uint32_t hash){
     cJSON *main = cJSON_ParseWithLength(string, len);
     cJSON *hashes = cJSON_GetObjectItemCaseSensitive(main, "hashes");
@@ -250,4 +262,55 @@ int json_compare_hash(char *string, long len, uint32_t hash){
     }
     cJSON_Delete(main);
     return 0;
+}
+
+int json_find_existing(char *string, long len, uint32_t hash, int *grid_after){
+    cJSON *main = cJSON_ParseWithLength(string, len);
+    cJSON *history = cJSON_GetObjectItemCaseSensitive(main, "history");
+    cJSON *object = NULL;
+    cJSON *hash_json = NULL;
+    cJSON *grid_from_json = NULL;
+    cJSON *element_from_grid = NULL;
+    cJSON_ArrayForEach(object, history){
+        hash_json = cJSON_GetObjectItemCaseSensitive(object, "hash");
+        if(hash_json->valuedouble == hash){
+            int i = 0;
+            grid_from_json = cJSON_GetObjectItemCaseSensitive(object, "after_solving");
+            cJSON_ArrayForEach(element_from_grid, grid_from_json){
+                *(grid_after + i) = element_from_grid->valuedouble;
+                i++;
+            }
+            cJSON_Delete(main);
+            return 1;
+        }
+    }
+    cJSON_Delete(main);
+    return 0;
+
+}
+
+int file_not_found(FILE *src, char *name){
+    printf("File %s does not exist, attempting to create it...\n", name);
+    src = fopen(name, "w+");
+    if(src == NULL){
+        printf("Couldn't create file %s, ignoring history...\n", name);
+        return 0;
+    }
+    return 1;
+}
+
+void history(WINDOW *win, char *string, int*positions_y, int*positions_x){
+
+}
+
+int print_to_file(char *str, int *array){
+    FILE *src = fopen(str, "w+");
+    if(!src)
+        return 0;
+
+    for(int i = 0; i < 9; i++){
+        fprintf(src, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n", *(array + (i*9)), *(array + (i*9) + 1), *(array + (i*9) + 2), *(array + (i*9) + 3), *(array + (i*9) + 4), *(array + (i*9) + 5), *(array + (i*9) + 6), *(array + (i*9) + 7), *(array + (i*9) + 8));
+    }
+    fclose(src);
+    return 1;    
 }
