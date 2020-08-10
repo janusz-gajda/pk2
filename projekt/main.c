@@ -1,10 +1,8 @@
 //CLI arguments
 //-h --help - shows help
 //-i --input - input CSV formated puzzle
-//-s --setup - launch into CLI menu
 //-o --output - save solved puzzle into CSV file
 //-p --previous - shows history of puzzles
-//-l [id] --launch [id] - launch privious puzzle
 //[none] - shows help
 
 #ifdef _WIN32
@@ -22,7 +20,32 @@
 #include <signal.h>
 #include "src/functions.c"
 
-int main(int arg, char *argv[]){
+
+int main(int argc, char *argv[]){
+    int history = 0;
+    int previous = 0;
+    int input = 0;
+    int output = 0;
+    int setup = 0;
+    //read starting params
+    if(argc < 2){
+        printf("Help here\n");
+        return 0;
+    }
+
+    for(int i = 0; i < argc; i++){
+        if(!strcmp(argv[i],"-h") || !strcmp(argv[i],"--help")){
+            printf("Help here\n");
+            return 0;
+        } else if((!strcmp(argv[i],"-i") || !strcmp(argv[i],"--input")) && !input){
+            input = ++i;
+        } else if((!strcmp(argv[i],"-o") || !strcmp(argv[i],"--output")) && !output){
+            output = ++i;
+        } else if(!strcmp(argv[i],"-p") || !strcmp(argv[i],"--previous")){
+            previous = 1;
+        }
+    }
+ 
     int positions_x[9], positions_y[9], grid_before[9][9], grid_after[9][9];
     int *pos_x_p = &positions_x[0];
     int *pos_y_p = &positions_y[0];
@@ -30,10 +53,8 @@ int main(int arg, char *argv[]){
     int *grid_after_p = &grid_after[0][0];
     calculate_positions(pos_x_p,pos_y_p);
 
-    if(!argv[1])
-        return 0;
 
-    FILE *source = fopen(argv[1], "r");
+    FILE *source = fopen(argv[input], "r");
     read_array_from_file(source, grid_before_p, grid_after_p);
 
     uint32_t hash = create_hash(grid_before_p);
@@ -58,7 +79,18 @@ int main(int arg, char *argv[]){
     }
     fclose(json);
 
-    int check = 0;
+    int check = json_check_integrity(string_from_file, fsize+1);
+
+    if(!check){
+        free(string_from_file);
+        string_from_file = json_create_missing();
+        fsize = strlen(string_from_file);
+    } else if(check == 2){
+        history = 0;
+    }
+
+    check = 0;
+
     if(json_compare_hash(string_from_file, fsize+1, hash)){
         check = json_find_existing(string_from_file, fsize+1, hash, grid_after_p);
         printf("This puzzle has already been solved, printing solution\n");
@@ -82,6 +114,7 @@ int main(int arg, char *argv[]){
 
         endwin();
     } else if(!check){
+        printf("No hash found");
         initscr();
         crmode();
         cbreak();
@@ -121,7 +154,10 @@ int main(int arg, char *argv[]){
     }
     free(string_from_file);    
     printf("Hash: %u\n", hash);
-    print_to_file("temp.csv", grid_after_p);
+    if(output){
+        print_to_file(argv[output], grid_after_p);
+    }
+   
 
 
 

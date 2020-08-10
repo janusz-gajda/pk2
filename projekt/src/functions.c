@@ -289,6 +289,26 @@ int json_find_existing(char *string, long len, uint32_t hash, int *grid_after){
 
 }
 
+int json_check_integrity(char *string, long len){
+    cJSON *main = cJSON_ParseWithLength(string, len);
+    if(main == NULL){
+        printf("There was a problem with history file! What to do:\n");
+        printf("c - continue without history\n");
+        printf("n - create new history file\n");
+        char ch;
+        ch = getchar();
+        printf("%c",ch);
+        if(ch == 156 || ch == 116){
+            return 0;
+        } else{
+            return 2;
+        }
+    } else{
+        cJSON_Delete(main);
+        return 1;
+    }
+}
+
 int file_not_found(FILE *src, char *name){
     printf("File %s does not exist, attempting to create it...\n", name);
     src = fopen(name, "w+");
@@ -299,8 +319,11 @@ int file_not_found(FILE *src, char *name){
     return 1;
 }
 
-void history(WINDOW *win, char *string, int*positions_y, int*positions_x){
+void json_history(char *string){
+    cJSON *main = cJSON_Parse(string);
 
+        
+    free(main);
 }
 
 int print_to_file(char *str, int *array){
