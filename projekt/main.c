@@ -3,6 +3,7 @@
 //-i --input - input CSV formated puzzle
 //-o --output - save solved puzzle into CSV file
 //-p --previous - shows history of puzzles
+//-f --force - force solving, even if in hisotry
 //[none] - shows help
 
 #ifdef _WIN32
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]){
     int previous = 0;
     int input = 0;
     int output = 0;
-    int setup = 0;
+    int force = 0;
     //read starting params
     if(argc < 2){
         printf("Help here\n");
@@ -43,6 +44,8 @@ int main(int argc, char *argv[]){
             output = ++i;
         } else if(!strcmp(argv[i],"-p") || !strcmp(argv[i],"--previous")){
             previous = 1;
+        } else if(!strcmp(argv[i],"-f") || !strcmp(argv[i],"--force")){
+            force = 1;
         }
     }
  
@@ -105,35 +108,48 @@ int main(int argc, char *argv[]){
         calculate_positions(pos_x_p,pos_y_p);
         FILE *source = fopen(argv[input], "r");
         read_array_from_file(source, grid_before_p, grid_after_p);
+        fclose(source);
+        if(!sudoku_validator(grid_before_p)){
+            free(string_from_file);
+            printf("Provided puzzle is unsolvable!\n");
+            return 0;
+        }
         uint32_t hash = create_hash(grid_before_p);
 
         if(history){
             if(json_compare_hash(string_from_file, fsize+1, hash)){
-            check = json_find_existing(string_from_file, fsize+1, hash, grid_after_p);
-            free(string_from_file);
-            printf("This puzzle has already been solved, printing solution\n");
-            initscr();
-            crmode();
-            cbreak();
+                if(!force){
+                    check = json_find_existing(string_from_file, fsize+1, hash, grid_after_p);
+                    if(check){
+                        free(string_from_file);
+                        printf("This puzzle has already been solved, printing solution\n");
+                        initscr();
+                        crmode();
+                        cbreak();
 
-            int start_x, start_y, width, height;
-            height = 13;
-            width = 23;
-            start_y = (LINES - height) / 2;
-            start_x = (COLS - width) / 2;
+                        int start_x, start_y, width, height;
+                        height = 13;
+                        width = 23;
+                        start_y = (LINES - height) / 2;
+                        start_x = (COLS - width) / 2;
 
-            WINDOW *win = newwin(height, width, start_y, start_x);
-            refresh();
-            wrefresh(win);
-            curs_set (0);
+                        WINDOW *win = newwin(height, width, start_y, start_x);
+                        refresh();
+                        wrefresh(win);
+                        curs_set (0);
 
-            print_array_ncurses(win,grid_after_p,pos_y_p,pos_x_p);
-            getch();
+                        print_array_ncurses(win,grid_after_p,pos_y_p,pos_x_p);
+                        getch();
 
-            endwin();
+                        endwin();
+                    }
+                } else{
+                    check = 1;
+                }
+                
             }
-        } if(!history || !check){
-            printf("No hash found");
+            
+        } if(!history || !check || force){
             initscr();
             crmode();
             cbreak();
@@ -162,7 +178,7 @@ int main(int argc, char *argv[]){
 
             double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Solving this puzzle took %.3f seconds\n", time_spent);
-            if(history){
+            if(history && (!force || (force && !check))){
                 char *string_to_file = NULL;
                 string_to_file = json_create_object(grid_before_p, grid_after_p, hash, string_from_file, fsize + 1);
                 json = fopen("temp.json", "w+");

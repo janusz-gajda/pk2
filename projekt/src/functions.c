@@ -128,6 +128,19 @@ int sudoku_checker(int *array, int x, int y, int value){
 
 }
 
+int sudoku_validator(int *array){
+    for(int i = 0; i < 9; i++){
+        for(int j = 0; j < 9; j++){
+            if(*(array + (i*9) + j) == 0)
+                continue;
+            if(!sudoku_checker(array,j,i,*(array + (i*9) + j)))
+                return 0;
+            
+        }
+    }
+    return 1;
+}
+
 int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, int y, int x){
     if(*(array + ( y * 9) + x)){ // if is given as hint, let's go to another one
         if(x == 8 && y == 8) //if is end of array
@@ -182,17 +195,27 @@ void calculate_positions(int *x, int *y){
 
 void read_array_from_file(FILE *source, int *array_before, int *array_after){
     int i = 0;
-    int p0, p1, p2, p3, p4, p5, p6, p7, p8;
-    while(fscanf(source, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n",&p0,&p1,&p2,&p3,&p4,&p5,&p6,&p7,&p8) != EOF){
-        *(array_before + (i*9) + 0) = *(array_after + (i*9) + 0) = p0;
-        *(array_before + (i*9) + 1) = *(array_after + (i*9) + 1) = p1;
-        *(array_before + (i*9) + 2) = *(array_after + (i*9) + 2) = p2;
-        *(array_before + (i*9) + 3) = *(array_after + (i*9) + 3) = p3;
-        *(array_before + (i*9) + 4) = *(array_after + (i*9) + 4) = p4;
-        *(array_before + (i*9) + 5) = *(array_after + (i*9) + 5) = p5;
-        *(array_before + (i*9) + 6) = *(array_after + (i*9) + 6) = p6;
-        *(array_before + (i*9) + 7) = *(array_after + (i*9) + 7) = p7;
-        *(array_before + (i*9) + 8) = *(array_after + (i*9) + 8) = p8; 
+    int p[9];
+
+    for(int j = 0; j < 81; j++){
+        *(array_before + j) = *(array_after + j) = 0;
+    }
+
+    while(fscanf(source, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n",&p[0],&p[1],&p[2],&p[3],&p[4],&p[5],&p[6],&p[7],&p[8]) != EOF){
+
+        for(int j = 0; j < 9; j++)
+            if(p[j] < 0 || p[j] > 9)
+                p[j] = 0;
+            
+        *(array_before + (i*9) + 0) = *(array_after + (i*9) + 0) = p[0];
+        *(array_before + (i*9) + 1) = *(array_after + (i*9) + 1) = p[1];
+        *(array_before + (i*9) + 2) = *(array_after + (i*9) + 2) = p[2];
+        *(array_before + (i*9) + 3) = *(array_after + (i*9) + 3) = p[3];
+        *(array_before + (i*9) + 4) = *(array_after + (i*9) + 4) = p[4];
+        *(array_before + (i*9) + 5) = *(array_after + (i*9) + 5) = p[5];
+        *(array_before + (i*9) + 6) = *(array_after + (i*9) + 6) = p[6];
+        *(array_before + (i*9) + 7) = *(array_after + (i*9) + 7) = p[7];
+        *(array_before + (i*9) + 8) = *(array_after + (i*9) + 8) = p[8]; 
         i++;
 
         if(i > 8)
@@ -330,9 +353,9 @@ int print_to_file(char *str, int *array){
     if(!src)
         return 0;
 
-    for(int i = 0; i < 9; i++){
+    for(int i = 0; i < 9; i++)
         fprintf(src, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n", *(array + (i*9)), *(array + (i*9) + 1), *(array + (i*9) + 2), *(array + (i*9) + 3), *(array + (i*9) + 4), *(array + (i*9) + 5), *(array + (i*9) + 6), *(array + (i*9) + 7), *(array + (i*9) + 8));
-    }
+    
     fclose(src);
     return 1;    
 }

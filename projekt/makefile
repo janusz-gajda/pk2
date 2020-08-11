@@ -1,6 +1,6 @@
 all: debug
 
-relese : main.c
+release : main.c
 	gcc -o main main.c -lncurses -O2
 
 debug : main.c
