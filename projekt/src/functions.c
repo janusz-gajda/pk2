@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "cJSON/cJSON.c"
 
 #define REFRESH_INTERVAL 1000000
@@ -295,10 +296,8 @@ int json_check_integrity(char *string, long len){
         printf("There was a problem with history file! What to do:\n");
         printf("c - continue without history\n");
         printf("n - create new history file\n");
-        char ch;
-        ch = getchar();
-        printf("%c",ch);
-        if(ch == 156 || ch == 116){
+        char ch = getchar();
+        if(ch == 'n' || ch == 'N'){
             return 0;
         } else{
             return 2;
@@ -323,7 +322,7 @@ void json_history(char *string){
     cJSON *main = cJSON_Parse(string);
 
         
-    free(main);
+    cJSON_Delete(main);
 }
 
 int print_to_file(char *str, int *array){
