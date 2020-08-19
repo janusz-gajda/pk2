@@ -3,9 +3,24 @@
 #include <stdio.h>
 #include "cJSON/cJSON.c"
 
+#ifdef _WIN32
+#include <conio.h>
+#else
+#include <stdio.h>
+#define clrscr() printf("\e[1;1H\e[2J")
+#endif
+
 #define REFRESH_INTERVAL 1000000
 
 uint32_t REFRESH_COUNTER = 0;
+
+void help(void){
+    printf("-h --help - shows help\n");
+    printf("-i --input - input CSV formatted puzzle\n");
+    printf("-o --output - save solved puzzle into CSV file (only active, when -i is provided)\n");
+    printf("-p --previous - shows history of puzzles (disregards all other options)\n");
+    printf("-f --force - force solving, even if in hisotry\n");
+}
 
 long file_size(FILE *src){
     fseek(src, 0, SEEK_END);
@@ -313,19 +328,58 @@ int json_find_existing(char *string, long len, uint32_t hash, int *grid_after){
 
 }
 
+int json_found_problem(void){
+    printf("There was a problem with history file! What to do:\n");
+    printf("c - continue without history\n");
+    printf("n - create new history file\n");
+    char ch = getchar();
+    if(ch == 'n' || ch == 'N'){
+        return 0;
+    } else{
+        return 2;
+    }
+}
+
 int json_check_integrity(char *string, long len){
     cJSON *main = cJSON_ParseWithLength(string, len);
     if(main == NULL){
-        printf("There was a problem with history file! What to do:\n");
-        printf("c - continue without history\n");
-        printf("n - create new history file\n");
-        char ch = getchar();
-        if(ch == 'n' || ch == 'N'){
-            return 0;
-        } else{
-            return 2;
-        }
+        return json_found_problem();
     } else{
+        cJSON *history = cJSON_GetObjectItemCaseSensitive(main, "history");
+        cJSON *hashes = cJSON_GetObjectItemCaseSensitive(main, "hashes");
+        if(hashes == NULL || history == NULL){
+            cJSON_Delete(main);
+            return json_found_problem();
+        } else{
+            cJSON *object = NULL;
+            cJSON *grid_before = NULL;
+            cJSON *grid_after = NULL;
+            cJSON *hash = NULL;
+            int i = 0;
+            cJSON_ArrayForEach(object, history){
+                i++;
+                grid_before = cJSON_GetObjectItemCaseSensitive(object, "before_solving");
+                grid_after = cJSON_GetObjectItemCaseSensitive(object, "after_solving");
+                hash = cJSON_GetObjectItemCaseSensitive(object, "hash");
+                if(grid_before == NULL || grid_after == NULL || hash == NULL){
+                    cJSON_Delete(main);
+                    return json_found_problem();
+                } if(!cJSON_IsNumber(hash) || !cJSON_IsArray(grid_before) || !cJSON_IsArray(grid_after) || cJSON_GetArraySize(grid_before) != cJSON_GetArraySize(grid_after) || cJSON_GetArraySize(grid_before) != 81){
+                    cJSON_Delete(main);
+                    return json_found_problem();
+                }
+            }
+            if(i == 0){
+                cJSON_Delete(main);
+                return 3;
+            }
+            cJSON_ArrayForEach(object,hashes){
+                if(!cJSON_IsNumber(object)){
+                    cJSON_Delete(main);
+                    return json_found_problem();
+                }
+            }
+        }
         cJSON_Delete(main);
         return 1;
     }
@@ -341,11 +395,115 @@ int file_not_found(FILE *src, char *name){
     return 1;
 }
 
-void json_history(char *string){
-    cJSON *main = cJSON_Parse(string);
+int json_history(char *string, long len){
+    cJSON *main = cJSON_ParseWithLength(string,len);
+    cJSON *history = cJSON_GetObjectItemCaseSensitive(main, "history");
+    cJSON *list = history->child;
+    cJSON *grid_before_json = NULL;
+    cJSON *grid_after_json = NULL;
+    cJSON *element = NULL;
+    int next_avaliable = 1;
+    int previous_avaliable = 0;
+    int grid_before[9][9], grid_after[9][9];
+    int *grid_before_p = &grid_before[0][0];
+    int *grid_after_p = &grid_after[0][0];
+    while(1){
+        if(list->prev == NULL){
+            previous_avaliable = 0;
+        } else{
+            previous_avaliable = 1;
+        }
 
+        if(list->next == NULL){
+            next_avaliable = 0;
+        } else{
+            next_avaliable = 1;
+        }
+        grid_before_json = cJSON_GetObjectItemCaseSensitive(list, "before_solving");
+        grid_after_json = cJSON_GetObjectItemCaseSensitive(list, "after_solving");
+        int i = 0;
+        cJSON_ArrayForEach(element,grid_before_json){
+            if(i < 81)
+                *(grid_before_p + i) = element->valuedouble;
+            i++;
+        }
+        i = 0;
+        cJSON_ArrayForEach(element,grid_after_json){
+            if(i < 81)
+                *(grid_after_p + i) = element->valuedouble;
+            i++;    
+        }
+        printf("Puzzle provided:\n\n\t");
+        for(i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                if(grid_before[i][j] == 0){
+                    printf(". ");
+                } else{
+                    printf("%d ", grid_before[i][j]);
+                }
+
+                if(j == 2 || j == 5){
+                    printf("  ");
+                }
+            }
+            if(i == 2 || i == 5){
+                printf("\n");
+            } 
+            printf("\n\t");
+        }
+        printf("\n\nPuzzle solved:\n\n\t");
+        for(i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                printf("%d ", grid_after[i][j]);
+                if(j == 2 || j == 5){
+                    printf("  ");
+                }
+            }
+            if(i == 2 || i == 5){
+                printf("\n");
+            } 
+            printf("\n\t");
+        }
+        if(next_avaliable == 0){
+            printf("\n\n e - exit  p - previous\n");
+        } else if(previous_avaliable == 0){
+            printf("\n\n e - exit  n - next\n");
+        } else{
+            printf("\n\n e - exit  n - next  p - previous\n");
+        }
+        i = 0;
+        while(!i){
+            char ch = getchar();
+            if(ch == 'e' || ch == 'E'){
+                i = -1;
+                break;
+            } else if((ch == 'n' || ch == 'N') && next_avaliable){
+                i = 1;
+                break;
+            } else if((ch == 'p' || ch == 'P') && previous_avaliable){
+                i = 2;
+                break;
+            } else if(ch == 'n' || ch == 'N'){
+                printf("\nNext is not available\n");
+            } else if(ch == 'p' || ch == 'P'){
+                printf("\nPrevious is not available\n");
+            }
+        }
+        if(i == 1){
+            list = list->next;
+            clrscr();
+        } else if(i == 2){
+            list = list->prev;
+            clrscr();
+        } else{
+            cJSON_Delete(main);
+            return 1;
+        }
+
+    }
         
     cJSON_Delete(main);
+    return 1;
 }
 
 int print_to_file(char *str, int *array){

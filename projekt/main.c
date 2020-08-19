@@ -1,17 +1,10 @@
 //CLI arguments
 //-h --help - shows help
-//-i --input - input CSV formated puzzle
+//-i --input - input CSV formatted puzzle
 //-o --output - save solved puzzle into CSV file
 //-p --previous - shows history of puzzles
 //-f --force - force solving, even if in hisotry
 //[none] - shows help
-
-#ifdef _WIN32
-#include <conio.h>
-#else
-#include <stdio.h>
-#define clrscr() printf("\e[1;1H\e[2J")
-#endif
 
 #include <ncurses.h>
 #include <stdio.h>
@@ -30,13 +23,13 @@ int main(int argc, char *argv[]){
     int force = 0;
     //read starting params
     if(argc < 2){
-        printf("Help here\n");
+        help();
         return 0;
     }
 
     for(int i = 0; i < argc; i++){
         if(!strcmp(argv[i],"-h") || !strcmp(argv[i],"--help")){
-            printf("Help here\n");
+            help();
             return 0;
         } else if((!strcmp(argv[i],"-i") || !strcmp(argv[i],"--input")) && !input){
             input = ++i;
@@ -58,10 +51,10 @@ int main(int argc, char *argv[]){
     long fsize;
 
 
-    FILE *json = fopen("temp.json", "r+");
+    FILE *json = fopen("history.json", "r+");
     if(json == NULL){
         printf("History file does not exist, attempting to create...\n");
-        json = fopen("temp.json", "w+");
+        json = fopen("history.json", "w+");
         if(!json){
             printf("Failed to create history file, ommiting it...\n");
             history = 0;
@@ -76,7 +69,7 @@ int main(int argc, char *argv[]){
             fsize = strlen(string_from_file);
         } else{
             string_from_file = malloc(fsize + 1);
-            fread(string_from_file, 1, fsize, json);
+            int read = fread(string_from_file, 1, fsize, json);
         }
         fclose(json);
 
@@ -88,15 +81,22 @@ int main(int argc, char *argv[]){
             fsize = strlen(string_from_file);
         } else if(json_check == 2){
             history = 0;
+        } else if(json_check == 3){
+            history = 2;
         }
     }
 
     if(previous){
         if(!history){
-            printf("There was a problem with history file, therefore previous resoults are unavailable");
+            printf("There was a problem with history file, therefore previous results are unavailable\n");
+            free(string_from_file);
+            return 0;
+        } if(history == 2){
+            printf("There are no previous results available\n");
+            free(string_from_file);
             return 0;
         } else{
-            json_history(string_from_file);
+            json_history(string_from_file, fsize+1);
             free(string_from_file);
             return 0;
         }
@@ -107,6 +107,13 @@ int main(int argc, char *argv[]){
         int check = 0;
         calculate_positions(pos_x_p,pos_y_p);
         FILE *source = fopen(argv[input], "r");
+        if(source == NULL){
+            printf("Cannot open %s\n",argv[input]);
+            if(history){
+                free(string_from_file);
+            }
+            return 0;
+        }
         read_array_from_file(source, grid_before_p, grid_after_p);
         fclose(source);
         if(!sudoku_validator(grid_before_p)){

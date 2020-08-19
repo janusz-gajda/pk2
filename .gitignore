@@ -63,3 +63,4 @@ projekt/test
 projekt/main
 projekt/test*.*
 projekt/temp*.*
+projekt/history.json

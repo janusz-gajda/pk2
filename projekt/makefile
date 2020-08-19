@@ -1,4 +1,4 @@
-all: debug
+all: release
 
 release : main.c
 	gcc -o main main.c -lncurses -O2
