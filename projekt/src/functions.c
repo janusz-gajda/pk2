@@ -14,6 +14,29 @@
 
 uint32_t REFRESH_COUNTER = 0;
 
+typedef struct arg {   
+    struct arg *next;
+    struct arg *prev;
+    int type;
+    int argv_index;
+    int enabled;
+    
+} arg_t;
+
+enum types{
+    FORCE,
+    HISTORY,
+    INPUT,
+    OUTPUT,
+    PREVIOUS
+};
+
+enum enable{
+    ON,
+    OFF
+};
+
+
 void help(void){
     printf("-h --help - shows help\n");
     printf("-i --input - input CSV formatted puzzle\n");
@@ -90,20 +113,14 @@ void print_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
 }
 
 int sudoku_checker(int *array, int x, int y, int value){
-    int err = 0;
     //check, if error in col or in row
     for(int i = 0; i < 9; i++){
         if(*(array + (y*9) + i) == value && i != x){
-            err = 1; 
-            break;
+            return 0;
         } else if(*(array + (i*9) + x) == value && i != y){ 
-            err = 1; 
-            break;
+            return 0;
         }
     }
-
-    if(err)
-        return 0;
 
 
     //determine, which 3x3 grid to compare against
@@ -130,16 +147,12 @@ int sudoku_checker(int *array, int x, int y, int value){
                 continue;
             }
             if(*(array + (grid_y*9) + (i*9) + grid_x + j) == value){
-                err = 1;
-                break;
+                return 0;
             }
         }
     }
 
-    if(err)
-        return 0;
-    else
-        return 1;
+   return 1;
 
 }
 
@@ -148,7 +161,7 @@ int sudoku_validator(int *array){
         for(int j = 0; j < 9; j++){
             if(*(array + (i*9) + j) == 0)
                 continue;
-            if(!sudoku_checker(array,j,i,*(array + (i*9) + j)))
+            if(!sudoku_checker(array, j, i, *(array + (i*9) + j)))
                 return 0;
             
         }
@@ -157,7 +170,7 @@ int sudoku_validator(int *array){
 }
 
 int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, int y, int x){
-    if(*(array + ( y * 9) + x)){ // if is given as hint, let's go to another one
+    if(*(array + (y*9) + x)){ // if is given as hint, let's go to another one
         if(x == 8 && y == 8) //if is end of array
             return 1;
         else if(x == 8) //if end of row
@@ -176,12 +189,12 @@ int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, i
             if(y == 8 && x == 8)
                 return 1;
             else if(x == 8)
-                if(!sudoku_solver(win,array,positions_y,positions_x,y+1,0))
+                if(!sudoku_solver(win, array, positions_y, positions_x, y+1, 0))
                     continue;
                 else
                     return 1;
             else
-                if(!sudoku_solver(win,array,positions_y,positions_x,y,x+1))
+                if(!sudoku_solver(win, array, positions_y, positions_x, y, x+1))
                     continue;
                 else
                     return 1;    
@@ -218,19 +231,11 @@ void read_array_from_file(FILE *source, int *array_before, int *array_after){
 
     while(fscanf(source, "%d,%d,%d,%d,%d,%d,%d,%d,%d\n",&p[0],&p[1],&p[2],&p[3],&p[4],&p[5],&p[6],&p[7],&p[8]) != EOF){
 
-        for(int j = 0; j < 9; j++)
+        for(int j = 0; j < 9; j++){
             if(p[j] < 0 || p[j] > 9)
                 p[j] = 0;
-            
-        *(array_before + (i*9) + 0) = *(array_after + (i*9) + 0) = p[0];
-        *(array_before + (i*9) + 1) = *(array_after + (i*9) + 1) = p[1];
-        *(array_before + (i*9) + 2) = *(array_after + (i*9) + 2) = p[2];
-        *(array_before + (i*9) + 3) = *(array_after + (i*9) + 3) = p[3];
-        *(array_before + (i*9) + 4) = *(array_after + (i*9) + 4) = p[4];
-        *(array_before + (i*9) + 5) = *(array_after + (i*9) + 5) = p[5];
-        *(array_before + (i*9) + 6) = *(array_after + (i*9) + 6) = p[6];
-        *(array_before + (i*9) + 7) = *(array_after + (i*9) + 7) = p[7];
-        *(array_before + (i*9) + 8) = *(array_after + (i*9) + 8) = p[8]; 
+            *(array_before + (i*9) + j) = *(array_after + (i*9) + j) = p[j];    
+        }    
         i++;
 
         if(i > 8)
@@ -407,6 +412,7 @@ int json_history(char *string, long len){
     int grid_before[9][9], grid_after[9][9];
     int *grid_before_p = &grid_before[0][0];
     int *grid_after_p = &grid_after[0][0];
+    clrscr();
     while(1){
         if(list->prev == NULL){
             previous_avaliable = 0;

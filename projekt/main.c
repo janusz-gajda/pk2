@@ -188,7 +188,7 @@ int main(int argc, char *argv[]){
             if(history && (!force || (force && !check))){
                 char *string_to_file = NULL;
                 string_to_file = json_create_object(grid_before_p, grid_after_p, hash, string_from_file, fsize + 1);
-                json = fopen("temp.json", "w+");
+                json = fopen("history.json", "w+");
                 fprintf(json, "%s", string_to_file);
                 fclose(json);
                 free(string_to_file);
