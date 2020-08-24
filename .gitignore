@@ -66,3 +66,5 @@ projekt/temp*.*
 projekt/history.json
 projekt/src/functions.c
 projekt/sudoku
+projekt/html
+dox

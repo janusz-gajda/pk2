@@ -1,3 +1,4 @@
+/** @file */
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -6,6 +7,7 @@
 
 long REFRESH_COUNTER = 0;
 
+/**Print help*/
 void help(void){
     printf("-h --help - shows help\n");
     printf("-i --input - input CSV formatted puzzle\n");
@@ -14,6 +16,10 @@ void help(void){
     printf("-f --force - force solving, even if in hisotry\n");
 }
 
+/**Print array to file
+ * @param str file name
+ * @param array array of values
+*/
 int print_to_file(char *str, int *array){
     FILE *src = fopen(str, "w+");
     if(!src)
@@ -25,7 +31,11 @@ int print_to_file(char *str, int *array){
     fclose(src);
     return 1;    
 }
-
+/**Load array from CSV file
+ * @param source file
+ * @param array_before array before solving
+ * @param array_after array after solving
+*/
 void read_array_from_file(FILE *source, int *array_before, int *array_after){
     int i = 0;
     int p[9];
@@ -49,6 +59,10 @@ void read_array_from_file(FILE *source, int *array_before, int *array_after){
     }
 }
 
+/**Called, when file is not found
+ * @param src file
+ * @param name file name
+*/
 int file_not_found(FILE *src, char *name){
     printf("File %s does not exist, attempting to create it...\n", name);
     src = fopen(name, "w+");
@@ -58,7 +72,9 @@ int file_not_found(FILE *src, char *name){
     }
     return 1;
 }
-
+/**Check, if file is empty
+ * @param src file
+*/
 int is_empty(FILE *src){
     char ch;
     while((ch = getc(src)) != EOF){
@@ -71,6 +87,9 @@ int is_empty(FILE *src){
     return 1;
 }
 
+/**Get file size, then rewind
+ * @param src file
+*/
 long file_size(FILE *src){
     fseek(src, 0, SEEK_END);
     long fsize = ftell(src);
@@ -78,6 +97,10 @@ long file_size(FILE *src){
     return fsize;
 }
 
+/**Generate x and y coordinates for ncurses print
+ * @param x array for x values
+ * @param y array for y values
+*/
 void calculate_positions(int *x, int *y){
     int i_offsett = 1;
     int j_offsett = 1;
@@ -92,6 +115,9 @@ void calculate_positions(int *x, int *y){
     }
 }
 
+/**Create hash from array
+ * @param array array
+*/
 uint32_t create_hash(int *array){
     uint32_t hash, i;
     for(hash = i = 0; i < 81; ++i)
@@ -106,6 +132,12 @@ uint32_t create_hash(int *array){
     return hash;
 }
 
+/**Print array via ncurses liblary
+ * @param win ncurses window
+ * @param array values to print
+ * @param positions_y values for printing in y axis
+ * @param positions_x values for printing in x axis
+*/
 void print_array_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
     for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){
@@ -118,6 +150,12 @@ void print_array_ncurses(WINDOW *win, int *array, int *positions_y, int *positio
     wrefresh(win);
 }
 
+/**Call print_array_nucrses every REFRESH_INTERVAL calls
+ * @param win ncurses window
+ * @param array values to print
+ * @param positions_y values for printing in y axis
+ * @param positions_x values for printing in x axis
+*/
 void print_ncurses(WINDOW *win, int *array, int *positions_y, int *positions_x){
     if(REFRESH_COUNTER < REFRESH_INTERVAL){
         REFRESH_COUNTER++;

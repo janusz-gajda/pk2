@@ -1,3 +1,4 @@
+/** @file */
 #ifndef GENERIC_H
 #define GENERIC_H
 
@@ -38,34 +39,24 @@ enum enable{
     ON
 };
 
-//print help
 void help(void);
 
-//save file with puzzle result
 int print_to_file(char *, int *);
 
-//load array from CSV file
 void read_array_from_file(FILE *, int *, int *);
 
-//called, when file is not found
 int file_not_found(FILE *, char *);
 
-//check, if file is empty
 int is_empty(FILE *);
 
-//get file size, then rewind
 long file_size(FILE *);
 
-//generate x and y coordinates for ncurses print
 void calculate_positions(int *, int *);
 
-//create hash from array
 uint32_t create_hash(int *);
 
-//print array via ncurses liblary
 void print_array_ncurses(WINDOW *, int *, int *, int *);
 
-//call print_array_nucrses every REFRESH_INTERVAL calls
 void print_ncurses(WINDOW *, int *, int *, int *);
 
 #endif

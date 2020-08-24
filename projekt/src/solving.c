@@ -1,3 +1,4 @@
+/** @file */
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -8,6 +9,12 @@
 #include "json.h"
 #include "solving.h"
 
+/**Check, if provided value can be inserted
+ * @param array array of values
+ * @param x x position
+ * @param y y position
+ * @param value value to check
+*/
 int sudoku_checker(int *array, int x, int y, int value){
     //check, if error in column or in row
     for(int i = 0; i < 9; i++){
@@ -52,6 +59,9 @@ int sudoku_checker(int *array, int x, int y, int value){
 
 }
 
+/**Check, if there are no contradictions in input file
+ * @param array array of values
+*/
 int sudoku_validator(int *array){
     for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){
@@ -65,6 +75,14 @@ int sudoku_validator(int *array){
     return 1;
 }
 
+/**Main solving function
+ * @param win ncurses window
+ * @param arrray array of values
+ * @param positions_y coordinates for printing in y axis
+ * @param positions_x coordinates for printing in x axis
+ * @param y position y
+ * @param x position x
+*/
 int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, int y, int x){
     if(*(array + (y*9) + x)){ // if is given as hint, let's go to another one
         if(x == 8 && y == 8) //if is end of array
@@ -104,6 +122,12 @@ int sudoku_solver(WINDOW *win, int *array, int *positions_y, int *positions_x, i
     }
 }
 
+/**Start solving
+ * @param head head of struct
+ * @param string contents of JSON file
+ * @param fsize size of JSON file
+ * @param argv[] argv array
+*/
 int start_solver(arg_t *head, char *string, long fsize, char *argv[]){
     int positions_x[9], positions_y[9], grid_before[9][9], grid_after[9][9];
     int *pos_x_p = &positions_x[0];

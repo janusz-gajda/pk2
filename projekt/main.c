@@ -1,3 +1,4 @@
+/** @file */
 //CLI arguments
 //-h --help - shows help
 //-i --input - input CSV formatted puzzle
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]){
         help();
         return 0;
     }
-    
+
     //create necessary variables
     arg_t *head = param_create_struct();
     char *string_from_file = NULL;

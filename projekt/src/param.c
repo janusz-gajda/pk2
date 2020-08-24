@@ -1,7 +1,11 @@
+/** @file */
 #include <stdlib.h>
 #include "generic.h"
 #include "param.h"
 
+/**Allocate memory at the end of list
+ * @param head head of struct
+*/
 void add_to_end(arg_t *head){
     while(head->next != NULL){
         head = head->next;
@@ -12,6 +16,7 @@ void add_to_end(arg_t *head){
     head->next = NULL;
 }
 
+/**Create first element of list*/
 arg_t *param_create_struct(void){
     arg_t *head = (arg_t *)malloc(sizeof(arg_t));
     head->next = NULL;
@@ -22,6 +27,9 @@ arg_t *param_create_struct(void){
     return head;
 }
 
+/**Disable history file
+ * @param head head of struct
+*/
 void param_disable_history(arg_t *head){
     arg_t *head_p = head;
     while(head_p != NULL){
@@ -32,6 +40,9 @@ void param_disable_history(arg_t *head){
     }
 }
 
+/**Delete list
+ * @param head head of struct 
+*/
 void param_destroy_struct(arg_t *head){
     while(head != NULL){
         arg_t *next = head->next;
@@ -40,6 +51,9 @@ void param_destroy_struct(arg_t *head){
     }
 }
 
+/**Check, if input is activated
+ * @param head head of struct 
+*/
 int param_status_input(arg_t *head){
     arg_t *head_p = head;
     while(head_p != NULL){
@@ -51,6 +65,9 @@ int param_status_input(arg_t *head){
     return 0;
 }
 
+/**Check, if output is activated
+ * @param head head of struct 
+*/
 int param_status_output(arg_t *head){
     arg_t *head_p = head;
     while(head_p != NULL){
@@ -62,6 +79,9 @@ int param_status_output(arg_t *head){
     return 0;
 }
 
+/**Check, if history is activated
+ * @param head head of struct 
+*/
 int param_status_history(arg_t *head){
     arg_t *head_p = head;
     while(head_p != NULL){
@@ -72,6 +92,10 @@ int param_status_history(arg_t *head){
     }
     return 0;
 }
+
+/**Check, if force is activated
+ * @param head head of struct
+*/
 int param_status_force(arg_t *head){
     arg_t *head_p = head;
     while(head_p != NULL){
@@ -83,6 +107,9 @@ int param_status_force(arg_t *head){
     return 0;
 }
 
+/**Check, if previous is activated
+ * @param head head of struct
+*/
 int param_status_previous(arg_t *head){
     arg_t *head_p = head;
     while(head_p != NULL){
@@ -94,6 +121,10 @@ int param_status_previous(arg_t *head){
     return 0;
 }
 
+/**Create entry for input flag
+ * @param head head of struct
+ * @param argv_index argv index
+*/
 void param_create_input(arg_t *head, int argv_index){
     if(!param_status_input(head)){
         arg_t *head_p = head;
@@ -107,6 +138,10 @@ void param_create_input(arg_t *head, int argv_index){
     }
 }
 
+/**Create entry for output flag
+ * @param head head of struct 
+ * @param argv_index argv index
+*/
 void param_create_output(arg_t *head, int argv_index){
     if(!param_status_output(head)){
         arg_t *head_p = head;
@@ -121,6 +156,9 @@ void param_create_output(arg_t *head, int argv_index){
     
 }
 
+/**Create entry for force flag
+ * @param head head of struct
+*/
 void param_create_force(arg_t *head){
     if(!param_status_force(head)){
         arg_t *head_p = head;
@@ -135,6 +173,9 @@ void param_create_force(arg_t *head){
     
 }
 
+/**Create entry for previous flag
+ * @param head head of struct
+*/
 void param_create_previous(arg_t *head){
     if(!param_status_previous(head)){
         arg_t *head_p = head;

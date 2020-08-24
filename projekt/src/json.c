@@ -1,3 +1,4 @@
+/** @file */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -7,6 +8,7 @@
 #include "param.h"
 #include "json.h"
 
+/**Create empty JSON objects*/
 char *json_create_missing(void){
     char *string = NULL;
     cJSON *main = cJSON_CreateObject();
@@ -21,6 +23,13 @@ char *json_create_missing(void){
     return string;
 }
 
+/**Add entry for puzlle into JSON
+ * @param array_before array before solving
+ * @param array_after array after solving
+ * @param hash hash
+ * @param json_string contents of JSON
+ * @param size size of JSON string 
+*/
 char *json_create_object(int *array_before, int *array_after, uint32_t hash, char *json_string, long size){
     char *string = NULL;
     cJSON *json_main = cJSON_ParseWithLength(json_string,size);
@@ -60,6 +69,11 @@ char *json_create_object(int *array_before, int *array_after, uint32_t hash, cha
 
 }
 
+/**Check, if entry already exists
+ * @param string contents of JSON file
+ * @param len size of JSON file
+ * @param hash hash
+*/
 int json_compare_hash(char *string, long len, uint32_t hash){
     cJSON *main = cJSON_ParseWithLength(string, len);
     cJSON *hashes = cJSON_GetObjectItemCaseSensitive(main, "hashes");
@@ -75,6 +89,12 @@ int json_compare_hash(char *string, long len, uint32_t hash){
     return 0;
 }
 
+/**Get object form JSON
+ * @param string contents of JSON file
+ * @param len size of JSON file
+ * @param hash hash
+ * @param grid_after array after_solving 
+*/
 int json_find_existing(char *string, long len, uint32_t hash, int *grid_after){
     cJSON *main = cJSON_ParseWithLength(string, len);
     cJSON *history = cJSON_GetObjectItemCaseSensitive(main, "history");
@@ -101,6 +121,7 @@ int json_find_existing(char *string, long len, uint32_t hash, int *grid_after){
 
 }
 
+/**Called, when problem occured with JSON file*/
 int json_found_problem(void){
     printf("There was a problem with history file! What to do:\n");
     printf("c - continue without history\n");
@@ -113,6 +134,10 @@ int json_found_problem(void){
     }
 }
 
+/**Check, if JSON file is valid
+ * @param string contents of JSON file
+ * @param len size of JSON file 
+*/
 int json_check_integrity(char *string, long len){
     cJSON *main = cJSON_ParseWithLength(string, len);
     if(main == NULL){
@@ -158,6 +183,10 @@ int json_check_integrity(char *string, long len){
     }
 }
 
+/**Iterate through JSON file
+ * @param string contents of JSON file
+ * @param len size of JSON file 
+*/
 int json_history(char *string, long len){
     cJSON *main = cJSON_ParseWithLength(string,len);
     cJSON *history = cJSON_GetObjectItemCaseSensitive(main, "history");
@@ -270,6 +299,10 @@ int json_history(char *string, long len){
     return 1;
 }
 
+/**Initialize JSON
+ * @param head head of struct
+ * @param size size of JSON file
+*/
 char *start_history(arg_t *head, long *size){
     char *string_from_file = NULL;
     FILE *json = fopen("history.json", "r+");
@@ -310,6 +343,11 @@ char *start_history(arg_t *head, long *size){
     return string_from_file;
 }
 
+/**Previous function
+ * @param head head of struct
+ * @param string contents of JSON file 
+ * @param fsize size of JSON file
+*/
 void start_previous(arg_t *head, char *string, long fsize){
     if(!param_status_history(head)){
             printf("There was a problem with history file, therefore previous results are unavailable\n");
