@@ -64,3 +64,5 @@ projekt/main
 projekt/test*.*
 projekt/temp*.*
 projekt/history.json
+projekt/src/functions.c
+projekt/sudoku
